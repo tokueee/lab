@@ -14,23 +14,40 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        //移動
+        //前に進む
         if (Input.GetKey(KeyCode.W))
         {
             rb.AddForce(transform.forward * mspeed);
         }
+        //後に進む
         if (Input.GetKey(KeyCode.S))
         {
             rb.AddForce(-transform.forward * mspeed);
         }
+        //右に進む
         if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(transform.right * mspeed);
         }
+        //左に進む
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(-transform.right * mspeed);
+        }
+    }
+
+    private void Update() 
+    {
+        //keyを離したときに止まる
+        if (Input.GetKeyUp(KeyCode.W) ||
+            Input.GetKeyUp(KeyCode.A) ||
+            Input.GetKeyUp(KeyCode.S) ||
+            Input.GetKeyUp(KeyCode.D)) 
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 }
