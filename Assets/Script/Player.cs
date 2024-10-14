@@ -47,7 +47,17 @@ public class Player : MonoBehaviour
             Input.GetKeyUp(KeyCode.S) ||
             Input.GetKeyUp(KeyCode.D)) 
         {
-            rb.velocity = Vector3.zero;
+            if (Input.GetKey(KeyCode.W)||
+                Input.GetKey(KeyCode.A)||
+                Input.GetKey(KeyCode.S)||
+                Input.GetKey(KeyCode.D))
+            {
+                
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
     }
 }
