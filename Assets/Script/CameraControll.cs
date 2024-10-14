@@ -7,6 +7,7 @@ public class CameraControll: MonoBehaviour
     //追従して欲しいオブジェクト
     public Transform target;
     public Vector3 offset;
+    public Transform camera;
 
     private float RotateSpeed = 1.5f;
 
@@ -36,6 +37,7 @@ public class CameraControll: MonoBehaviour
         Rot_Camera.x = Mathf.Clamp(Rot_Camera.x, -90, 90);
         Rot_Camera.y += Input.GetAxis("Mouse X") * RotateSpeed;
 
-        transform.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
+        transform.rotation = Quaternion.Euler(0, Rot_Camera.y, 0);
+        camera.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
     }
 }
