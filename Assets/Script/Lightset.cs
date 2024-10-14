@@ -3,49 +3,97 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
+
 public class Lightset : MonoBehaviour
 {
-    // GameObject mylight;
-    public Light mylight;
-    public Light[] lights;
-    public float dspeed = 0.1f;
-    public float minlight = 1.0f;
-    public float minDelay = 1.1f; 
-    public float maxDelay = 3.0f;
-    private float[] time;
-    public int[] diminorder;
+
+    public Light[] mylight;
+    private float minlight = 1.0f;
+    private float dtime = 5.0f;
+    int i = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        int lightcount = lights.Length;
-        time = new float[lightcount];
-        //mylight = GetComponent<Light>();
-        for ( int i = 0; i < lightcount; i++)
-        {
-            time[i] = Random.Range(minDelay, maxDelay);
-        }
+        //mylight = gameObject.GetComponent<Light[]>();
     }
+
+    IEnumerator lighting()
+    {
+        for (i = 0; i < mylight.Length; i++)
+        {
+            if (mylight[i] != null)
+            {
+                mylight[i].intensity -= 0.001f;
+                yield return new WaitForSeconds(dtime);
+
+                if (mylight[i].intensity < minlight)
+                {
+                    mylight[i].intensity = minlight;
+                    //Debug.Log("OK");
+                }
+                Debug.Log(mylight[i]);
+            }
+            //yield return new WaitForSeconds(dtime);
+            //Debug.Log("true");
+        }
+        //yield return new WaitForSeconds(dtime);
+        Debug.Log("OK");
+    }
+
+    /*void lightingset()
+    {
+        for (i = 0; i < mylight.Length; i++)
+        {
+            if (mylight[i] != null)
+            {
+                //mylight[i].intensity -= 0.001f;
+
+                if (mylight[i].intensity < minlight)
+                {
+                    mylight[i].intensity = minlight;
+                    //Debug.Log("OK");
+                }
+                else
+                {
+                    mylight[i].intensity -= 0.001f;
+                }
+                Debug.Log(mylight[i]);
+            }
+            //StartCoroutine(Wait());
+            //Debug.Log("true");
+        }
+    }*/
 
     // Update is called once per frame
     void Update()
-    {
-        //Light[] lights = FindObjectsOfType<Light>();
-        foreach (int i in diminorder) 
+    { 
+        StartCoroutine(lighting());
+        //lightingset();
+        /*for(i =0; i < mylight.Length; i++) 
         {
-            if(i < 0 || i >= lights.Length) continue;
-
-            time[i] = Time.deltaTime;
-
-            if (time[i] < minlight)
+            if (mylight[i] != null)
             {
-                lights[i].intensity -= dspeed * Time.deltaTime;
-                if (lights[i].intensity < minlight)
+                mylight[i].intensity -= 0.01f;
+
+                if (mylight[i].intensity < minlight)
                 {
-                    lights[i].intensity = minlight;
+                    mylight[i].intensity = minlight;
+                    //Debug.Log("OK");
                 }
-                time[i] = Random.Range(minDelay, maxDelay);
+                //Debug.Log(mylight[i]);
             }
-        }
+            //StartCoroutine( Wait() );
+        }*/
+        //Debug.Log("finish");
+        /*if (mylight[0].intensity > 1)
+        {
+            mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
+        } else
+        {
+            mylight[1].intensity = mylight[1].intensity - Time.deltaTime;
+        }*/
+        //mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
+       
     }
 }
