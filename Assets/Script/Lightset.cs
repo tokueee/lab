@@ -17,13 +17,18 @@ public class Lightset : MonoBehaviour
     int i = 0;
     int lightoffCount = 1;
     int count =0;
-    
+
+    Player playerscript;
 
     // Start is called before the first frame update
     void Start()
     {
         //mylight = gameObject.GetComponent<Light[]>();
+        GameObject player = GameObject.Find("Capsule");
+        playerscript = player.GetComponent<Player>();
     }
+
+   
 
     IEnumerator lighting()
     {
@@ -58,16 +63,22 @@ public class Lightset : MonoBehaviour
         {
             mylight[j].intensity = minlight;
             //Debug.Log(j);
+            yield return new WaitForSeconds(dtime);
         }
     }
 
     IEnumerator Keyboard_LightOn()
     {
-        for (int k = 0; k < mylight.Length; k++)
+        /*for (int k = 0; k < mylight.Length; k++)
         {
             mylight[k].intensity = maxlight;
             yield return new WaitForSeconds(keyDtime);
-        }
+        }*/
+        mylight[0].intensity = maxlight;
+        mylight[1].intensity = maxlight;
+        mylight[2].intensity = maxlight;
+        yield return new WaitForSeconds(keyDtime);
+        StartCoroutine(Keyboad_LightOff());
         //Debug.Log(mylight[0]);
     }
 
@@ -118,20 +129,25 @@ public class Lightset : MonoBehaviour
         }
         if (mylight[0].intensity == minlight)
         {
-            if (Input.GetKeyDown(KeyCode.O))
+            if(playerscript.flag == true)
             {
-                Debug.Log(mylight[0].intensity);
+                //Debug.Log("ON");
                 StartCoroutine(Keyboard_LightOn());
             }
+            /*if (Input.GetKeyDown(KeyCode.O))
+            {
+                //Debug.Log(mylight[0].intensity);
+                StartCoroutine(Keyboard_LightOn());
+            }*/
         }
-        else if (mylight[0].intensity == maxlight)
+        /*else if (mylight[0].intensity == maxlight)
         {
             if (Input.GetKeyDown(KeyCode.O))
             {
                 Debug.Log(mylight[0].intensity);
                 StartCoroutine(Keyboad_LightOff());
             }
-        }
+        }*/
 
         //lightingset();
 

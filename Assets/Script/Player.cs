@@ -7,11 +7,32 @@ public class Player : MonoBehaviour
 {
     Rigidbody rb;
     float mspeed = 10f;
+    public bool flag = false;
+    
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
+       
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Button")
+        {
+            //Debug.Log("true");
+            flag = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.name == "Button")
+        {
+            //Debug.Log("true");
+            flag = false;
+        }
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -37,6 +58,7 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(-transform.right * mspeed);
         }
+        
     }
 
     private void Update() 
