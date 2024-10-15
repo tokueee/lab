@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -8,9 +9,15 @@ public class Lightset : MonoBehaviour
 {
 
     public Light[] mylight;
-    private float minlight = 1.0f;
-    private float dtime = 5.0f;
+    private float minlight = 0.0f;
+    private float maxlight = 3.7f;
+    public float starttime;
+    public float dtime;
+    public float keyDtime;
     int i = 0;
+    int lightoffCount = 1;
+    int count =0;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -24,21 +31,53 @@ public class Lightset : MonoBehaviour
         {
             if (mylight[i] != null)
             {
-                mylight[i].intensity -= 0.001f;
-                yield return new WaitForSeconds(dtime);
+                mylight[i].intensity -= 0.005f;
+                
 
                 if (mylight[i].intensity < minlight)
                 {
                     mylight[i].intensity = minlight;
                     //Debug.Log("OK");
                 }
-                Debug.Log(mylight[i]);
+                //Debug.Log(mylight[i]);
             }
-            //yield return new WaitForSeconds(dtime);
+            yield return new WaitForSeconds(dtime);
             //Debug.Log("true");
+            
         }
-        //yield return new WaitForSeconds(dtime);
-        Debug.Log("OK");
+        
+        //Debug.Log("OK");
+    }
+
+    IEnumerator LightOff()
+    {
+        yield return new WaitForSeconds(starttime);
+        mylight[0].intensity = minlight;
+        yield return new WaitForSeconds(dtime);
+        for(int j = 1;j < mylight.Length;j++)
+        {
+            mylight[j].intensity = minlight;
+            //Debug.Log(j);
+        }
+    }
+
+    IEnumerator Keyboard_LightOn()
+    {
+        for (int k = 0; k < mylight.Length; k++)
+        {
+            mylight[k].intensity = maxlight;
+            yield return new WaitForSeconds(keyDtime);
+        }
+        //Debug.Log(mylight[0]);
+    }
+
+    IEnumerator Keyboad_LightOff()
+    {
+        for (int k = 0; k < mylight.Length; k++)
+        {
+            mylight[k].intensity = minlight;
+            yield return new WaitForSeconds(keyDtime);
+        }
     }
 
     /*void lightingset()
@@ -67,25 +106,36 @@ public class Lightset : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        StartCoroutine(lighting());
-        //lightingset();
-        /*for(i =0; i < mylight.Length; i++) 
+    {
+        //StartCoroutine(lighting());
+        if(lightoffCount > count)
         {
-            if (mylight[i] != null)
+            if (mylight[mylight.Length - 1].intensity > 0)
             {
-                mylight[i].intensity -= 0.01f;
-
-                if (mylight[i].intensity < minlight)
-                {
-                    mylight[i].intensity = minlight;
-                    //Debug.Log("OK");
-                }
-                //Debug.Log(mylight[i]);
+                StartCoroutine(LightOff());
+                count++;
             }
-            //StartCoroutine( Wait() );
-        }*/
-        //Debug.Log("finish");
+        }
+        if (mylight[0].intensity == minlight)
+        {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                Debug.Log(mylight[0].intensity);
+                StartCoroutine(Keyboard_LightOn());
+            }
+        }
+        else if (mylight[0].intensity == maxlight)
+        {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                Debug.Log(mylight[0].intensity);
+                StartCoroutine(Keyboad_LightOff());
+            }
+        }
+
+        //lightingset();
+
+        
         /*if (mylight[0].intensity > 1)
         {
             mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
@@ -94,6 +144,6 @@ public class Lightset : MonoBehaviour
             mylight[1].intensity = mylight[1].intensity - Time.deltaTime;
         }*/
         //mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
-       
+
     }
 }
