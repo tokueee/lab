@@ -59,11 +59,19 @@ public class Lightset : MonoBehaviour
         yield return new WaitForSeconds(starttime);
         mylight[0].intensity = minlight;
         yield return new WaitForSeconds(dtime);
-        for(int j = 1;j < mylight.Length;j++)
+        mylight[1].intensity = minlight;
+        mylight[2].intensity = minlight;
+        yield return new WaitForSeconds(dtime);
+        for(int j = 0;j < mylight.Length;j++)
         {
-            mylight[j].intensity = minlight;
+            if (mylight[j].intensity == maxlight)
+            {
+                mylight[j].intensity = minlight;
+                yield return new WaitForSeconds(dtime);
+            }
+            /*mylight[j].intensity = minlight;
             //Debug.Log(j);
-            yield return new WaitForSeconds(dtime);
+            yield return new WaitForSeconds(dtime);*/
         }
     }
 
