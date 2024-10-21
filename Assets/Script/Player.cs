@@ -6,7 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody rb;
-    float mspeed = 10f;
+    float mspeed = 3f;//加速度変数
+    int SaveSpeed = 5;//速度制御用変数
     public bool flag = false;
     
     // Start is called before the first frame update
@@ -37,6 +38,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        //速度を検出して制御するif文
+        if (rb.velocity.magnitude > SaveSpeed)
+        {
+            mspeed = -8;
+        }
+        else if (rb.velocity.magnitude < SaveSpeed && rb.velocity.magnitude > 0f)
+        {
+            mspeed += SaveSpeed;
+        }
+        else if (rb.velocity.magnitude <= 0f)
+        {
+            mspeed = SaveSpeed;
+        }
+
         //移動
         //前に進む
         if (Input.GetKey(KeyCode.W))
@@ -80,6 +96,16 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
             }
+        }
+
+        //Shiftキーでダッシュする
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            SaveSpeed = 5;
+        }
+        else
+        {
+            SaveSpeed = 3;
         }
     }
 }
