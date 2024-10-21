@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     float mspeed = 3f;//â¡ë¨ìxïœêî
     int SaveSpeed = 5;//ë¨ìxêßå‰ópïœêî
     public bool flag = false;
+    public bool flag2 = false;
     
     // Start is called before the first frame update
     void Start()
@@ -17,22 +18,30 @@ public class Player : MonoBehaviour
        
     }
     private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "Button")
-        {
-            //Debug.Log("true");
-            flag = true;
-        }
-    }
+     {
+         if (collision.gameObject.name == "Button")
+         {
+             //Debug.Log("true");
+             flag = true;
+         }
+         if (collision.gameObject.name == "Button2")
+         {
+             flag2 = true;
+         }
+     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.name == "Button")
-        {
-            //Debug.Log("true");
-            flag = false;
-        }
-    }
+     private void OnCollisionExit(Collision collision)
+     {
+         if (collision.gameObject.name == "Button")
+         {
+             flag = false;
+             Debug.Log(flag);
+         }
+         if(collision.gameObject.name == "Button2")
+         {
+             flag2 =false;
+         }
+     }
 
 
     // Update is called once per frame
