@@ -66,6 +66,33 @@ public class Lightset : MonoBehaviour
         {
             if (mylight[j].intensity == maxlight)
             {
+                if (mylight[j] == mylight[6])
+                {
+                    mylight[6].intensity = minlight;
+                    mylight[7].intensity = minlight;
+                    mylight[16].intensity = minlight;
+                    yield return new WaitForSeconds(dtime);
+                }else if (mylight[j] == mylight[8])
+                {
+                    mylight[8].intensity = minlight;
+                    mylight[9].intensity = minlight;
+                    mylight[17].intensity = minlight;
+                    yield return new WaitForSeconds(dtime);
+                }
+                if (mylight[j] == mylight[10])
+                {
+                    mylight[10].intensity = minlight;
+                    mylight[12].intensity = minlight;
+                    mylight[18].intensity = minlight;
+                    yield return new WaitForSeconds(dtime);
+                }
+                if (mylight[j] == mylight[11])
+                {
+                    mylight[11].intensity = minlight;
+                    mylight[13].intensity = minlight;
+                    mylight[19].intensity = minlight;
+                    yield return new WaitForSeconds(dtime);
+                }
                 mylight[j].intensity = minlight;
                 yield return new WaitForSeconds(dtime);
             }
