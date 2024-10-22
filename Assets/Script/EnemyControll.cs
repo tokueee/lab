@@ -10,9 +10,6 @@ public class EnemyControll : MonoBehaviour
     private GameObject player;
     private NavMeshAgent nevMeshAgent;
 
-    //  [SerializeField] private Transform rayOrigin; // レイを発射するオブジェクトの位置
-
-
     [SerializeField]
     private float Enemy_Angle;
 
@@ -21,10 +18,16 @@ public class EnemyControll : MonoBehaviour
 
     private bool isChasing = false;
 
+    [SerializeField]
+    private Transform[] Gaol;
+
+    private int destNum = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         nevMeshAgent = GetComponent<NavMeshAgent>();
+        nevMeshAgent.destination = Gaol[destNum].position;
     }
 
     // Update is called once per frame
@@ -36,6 +39,10 @@ public class EnemyControll : MonoBehaviour
         if (isChasing == true)
         {
             nevMeshAgent.destination = player.transform.position;
+        }
+        else
+        {
+            if (nevMeshAgent.remainingDistance < 0.5f) { Patrol(); }
         }
     }
 
@@ -66,5 +73,17 @@ public class EnemyControll : MonoBehaviour
             }
         }
         else { isChasing = false; }
+    }
+    private void Patrol()
+    {
+        if (isChasing == false)
+        {
+            destNum += 1;
+            if (destNum == 4)
+            {
+                destNum = 0;
+            }
+            nevMeshAgent.destination = Gaol[destNum].position;
+        }
     }
 }

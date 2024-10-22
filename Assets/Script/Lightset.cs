@@ -24,7 +24,7 @@ public class Lightset : MonoBehaviour
     void Start()
     {
         //mylight = gameObject.GetComponent<Light[]>();
-        GameObject player = GameObject.Find("Capsule");
+        GameObject player = GameObject.Find("Player");
         playerscript = player.GetComponent<Player>();
     }
 
