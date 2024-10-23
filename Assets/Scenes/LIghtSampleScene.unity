@@ -479,6 +479,11 @@ MonoBehaviour:
   player: {fileID: 962013001}
   Enemy_Angle: 60
   Enemy_View: 10
+  Goal:
+  - {fileID: 242514478}
+  - {fileID: 641437926}
+  - {fileID: 1153636251}
+  - {fileID: 1271361705}
 --- !u!195 &131655170
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2691,8 +2696,8 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2772,13 +2777,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a4bcc845265a5c40922e8bba04af2bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b901650cccec414d81bdc9f911c35bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 0}
-  num: 0
+  noiseMaterial: {fileID: 2100000, guid: 15ce505ad8b2bb04ea5597800d3b2dfa, type: 2}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2982,7 +2986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a4bcc845265a5c40922e8bba04af2bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Object: {fileID: 0}
+  Object: {fileID: 1950599126}
   num: 0
 --- !u!1 &1221761378
 GameObject:
@@ -3950,7 +3954,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.29803923, g: 0.30588236, b: 0.31764707, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_Intensity: 3.77
   m_Range: 8
   m_SpotAngle: 49.8
