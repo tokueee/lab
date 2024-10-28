@@ -22,7 +22,7 @@ public class Randam : MonoBehaviour
         GameObject obj = GameObject.Find("Player"); //Playerっていうオブジェクトを探す
         playerscript = obj.GetComponent<Player>();
         //付いているスクリプトを取得
-        if (playerscript.flag)
+        if (playerscript.flags[0])
         {
             if (Get_Randam(ref SaveGet_rand))
             {

@@ -6,31 +6,33 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 
 public class Lightset : MonoBehaviour
-{
-
-    public Light[] mylight;
+{ 
     private float minlight = 0.0f;
     private float maxlight = 3.7f;
     public float starttime;
     public float dtime;
     public float keyDtime;
-    int i = 0;
+    public GameObject player;
+    public Light[] mylight;
+    //int i = 0;
     int lightoffCount = 1;
     int count =0;
+    int oncount;
+    bool cflag;
 
     Player playerscript;
 
     // Start is called before the first frame update
     void Start()
     {
-        //mylight = gameObject.GetComponent<Light[]>();
-        GameObject player = GameObject.Find("Player");
+        //GameObject player = GameObject.Find("Player");//ñºëOïœçXÇ…íçà”
+        Debug.Log(player);
         playerscript = player.GetComponent<Player>();
     }
 
    
 
-    IEnumerator lighting()
+    /*IEnumerator lighting()
     {
         for (i = 0; i < mylight.Length; i++)
         {
@@ -52,7 +54,7 @@ public class Lightset : MonoBehaviour
         }
         
         //Debug.Log("OK");
-    }
+    }*/
 
     IEnumerator LightOff()
     {
@@ -96,25 +98,46 @@ public class Lightset : MonoBehaviour
                 mylight[j].intensity = minlight;
                 yield return new WaitForSeconds(dtime);
             }
-            /*mylight[j].intensity = minlight;
-            //Debug.Log(j);
-            yield return new WaitForSeconds(dtime);*/
         }
     }
 
     IEnumerator Keyboard_LightOn()
     {
-        /*for (int k = 0; k < mylight.Length; k++)
+        if (playerscript.flags[1] == true)
         {
-            mylight[k].intensity = maxlight;
+            mylight[4].intensity = maxlight;
+            mylight[16].intensity = maxlight;
+            mylight[17].intensity = maxlight;
+            mylight[18].intensity = maxlight;
+            
             yield return new WaitForSeconds(keyDtime);
-        }*/
-        mylight[0].intensity = maxlight;
-        mylight[1].intensity = maxlight;
-        mylight[2].intensity = maxlight;
-        yield return new WaitForSeconds(keyDtime);
-        StartCoroutine(Keyboad_LightOff());
+            StartCoroutine(Keyboad_LightOff2());
+        }
+        if (playerscript.flags[0] == true)
+        {
+            if (mylight[2].intensity == minlight)
+            {
+                mylight[0].intensity = maxlight;
+                mylight[1].intensity = maxlight;
+                mylight[2].intensity = maxlight;
+                yield return new WaitForSeconds(keyDtime);
+                StartCoroutine(Keyboad_LightOff());
+            }
+            //Debug.Log(playerscript.flag);
+        }
+
         //Debug.Log(mylight[0]);
+    }
+
+    IEnumerator Keyboad_LightOff2() 
+    {
+        mylight[4].intensity = minlight;
+        for(int i = 16; i < 4; i++) 
+        {
+            //Debug.Log(i);
+            mylight[i].intensity = minlight;
+            yield return new WaitForSeconds(keyDtime);
+        }
     }
 
     IEnumerator Keyboad_LightOff()
@@ -126,34 +149,12 @@ public class Lightset : MonoBehaviour
         }
     }
 
-    /*void lightingset()
-    {
-        for (i = 0; i < mylight.Length; i++)
-        {
-            if (mylight[i] != null)
-            {
-                //mylight[i].intensity -= 0.001f;
-
-                if (mylight[i].intensity < minlight)
-                {
-                    mylight[i].intensity = minlight;
-                    //Debug.Log("OK");
-                }
-                else
-                {
-                    mylight[i].intensity -= 0.001f;
-                }
-                Debug.Log(mylight[i]);
-            }
-            //StartCoroutine(Wait());
-            //Debug.Log("true");
-        }
-    }*/
-
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(dtime);
         //StartCoroutine(lighting());
+        
         if(lightoffCount > count)
         {
             if (mylight[mylight.Length - 1].intensity > 0)
@@ -164,37 +165,15 @@ public class Lightset : MonoBehaviour
         }
         if (mylight[0].intensity == minlight)
         {
-            if(playerscript.flag == true)
+            if (playerscript.flags[0] == true)
             {
                 //Debug.Log("ON");
                 StartCoroutine(Keyboard_LightOn());
             }
-            /*if (Input.GetKeyDown(KeyCode.O))
+            if (playerscript.flags[1] == true)
             {
-                //Debug.Log(mylight[0].intensity);
                 StartCoroutine(Keyboard_LightOn());
-            }*/
-        }
-        /*else if (mylight[0].intensity == maxlight)
-        {
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                Debug.Log(mylight[0].intensity);
-                StartCoroutine(Keyboad_LightOff());
             }
-        }*/
-
-        //lightingset();
-
-        
-        /*if (mylight[0].intensity > 1)
-        {
-            mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
-        } else
-        {
-            mylight[1].intensity = mylight[1].intensity - Time.deltaTime;
-        }*/
-        //mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
-
+        }
     }
 }

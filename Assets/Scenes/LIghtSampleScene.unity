@@ -2668,8 +2668,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ca5021a030a384cb0585bb6b0f0e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flag: 0
-  flag2: 0
+  flags: 0000
+  Button:
+  - {fileID: 1505931522}
+  - {fileID: 400248629}
 --- !u!114 &962013008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4758,6 +4760,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9947277b3551d734c9683d8ce0d1c8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starttime: 2.5
+  dtime: 3.5
+  keyDtime: 5
+  player: {fileID: 962013001}
   mylight:
   - {fileID: 1936724146}
   - {fileID: 1506782617}
@@ -4781,9 +4787,6 @@ MonoBehaviour:
   - {fileID: 945041954}
   - {fileID: 294856081}
   - {fileID: 596217978}
-  starttime: 2.5
-  dtime: 3.5
-  keyDtime: 5
 --- !u!1 &1950599126
 GameObject:
   m_ObjectHideFlags: 0

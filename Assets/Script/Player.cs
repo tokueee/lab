@@ -8,8 +8,11 @@ public class Player : MonoBehaviour
     Rigidbody rb;
     float mspeed = 3f;//加速度変数
     int SaveSpeed = 5;//速度制御用変数
-    public bool flag = false;
-    public bool flag2 = false;
+    /*public bool flag = false;
+    public bool flag2 = false;*/
+    public bool[] flags;
+    //flags[0] はbuttonの判定
+    public GameObject[] Button;
     
     // Start is called before the first frame update
     void Start()
@@ -19,14 +22,14 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
      {
-         if (collision.gameObject.name == "Button")
+         if (collision.gameObject == Button[0])
          {
-             //Debug.Log("true");
-             flag = true;
+            //Debug.Log("true");
+            flags[0] = true;
          }
-         if (collision.gameObject.name == "Button2")
+         if (collision.gameObject == Button[1])//名前変更に注意
          {
-             flag2 = true;
+            flags[1] = true;
          }
      }
 
@@ -34,12 +37,12 @@ public class Player : MonoBehaviour
      {
          if (collision.gameObject.name == "Button")
          {
-             flag = false;
-             Debug.Log(flag);
+            flags[0] = false;
+            Debug.Log(flags[0]);
          }
          if(collision.gameObject.name == "Button2")
          {
-             flag2 =false;
+            flags[1] =false;
          }
      }
 
