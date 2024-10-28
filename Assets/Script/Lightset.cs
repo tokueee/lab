@@ -9,16 +9,24 @@ public class Lightset : MonoBehaviour
 { 
     private float minlight = 0.0f;
     private float maxlight = 3.7f;
+
+    private float timer = 60.0f;
+    private float times;
+    private float timer2;
+    private float[] stime = new float[5];
+    private float[] slight = new float[5];
+    //private int p = 7;
+    //private float[] ftime;
+
     public float starttime;
     public float dtime;
     public float keyDtime;
     public GameObject player;
+    public Light flight;
     public Light[] mylight;
     //int i = 0;
     int lightoffCount = 1;
     int count =0;
-    int oncount;
-    bool cflag;
 
     Player playerscript;
 
@@ -26,8 +34,15 @@ public class Lightset : MonoBehaviour
     void Start()
     {
         //GameObject player = GameObject.Find("Player");//ñºëOïœçXÇ…íçà”
-        Debug.Log(player);
         playerscript = player.GetComponent<Player>();
+        //stime[0] = timer - 10.0f;//10ïbå„Ç…ñæÇÈÇ≥Çâ∫Ç∞ÇÈÇΩÇﬂÇÃèâä˙ê›íË
+        slight[0] = 3.5f;
+        for(int i = 0; i < 5; i++)
+        {
+            timer2 = timer - (10 * (i+1));
+            stime[i] = timer2;
+            //Debug.Log("i =" +stime[i]);
+        }
     }
 
    
@@ -173,6 +188,84 @@ public class Lightset : MonoBehaviour
             if (playerscript.flags[1] == true)
             {
                 StartCoroutine(Keyboard_LightOn());
+            }
+        }
+        if (flight.intensity  > 0)
+        {
+            times =timer - Time.time;
+            Debug.Log(times);
+            if (times < stime[0] && times > stime[1])
+            {
+                slight[0] = 3.0f;
+                flight.intensity = slight[0];
+            }else if (times < stime[1] &&  times > stime[2])
+            {
+                slight[1] = 2.5f;
+                flight.intensity = slight[1];
+            }else if(times < stime[2] && times > stime[3])
+            {
+                slight[2] = 2.0f;
+                flight.intensity = slight[2];
+            }else if(times < stime[3] && times > stime[4])
+            {
+                slight[3] = 1.5f;
+                flight.intensity = slight[3];
+            }
+            else if(times < stime[4])
+            {
+                slight[4] = 1.0f;
+                flight.intensity = slight[4];
+            }
+            if(times < 0)
+            {
+                flight.intensity = 0;
+                times = 0.0f;
+            }
+            /*if(times  < 0)
+            {
+                timer = 10;
+                p -= 1;
+                flight.intensity = p * 0.5f;
+                Debug.Log("P="+ p);
+            }*/
+            
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                flight.intensity = 0.0f;
+            }
+        }
+        else if (flight.intensity == 0.0f && Input.GetKeyDown(KeyCode.F))
+        {
+            flight.intensity = slight[0];
+            if (times < stime[0] && times > stime[1])
+            {
+                slight[0] = 3.0f;
+                flight.intensity = slight[0];
+            }
+            else if (times < stime[1] && times > stime[2])
+            {
+                slight[1] = 2.5f;
+                flight.intensity = slight[1];
+            }
+            else if (times < stime[2] && times > stime[3])
+            {
+                slight[2] = 2.0f;
+                flight.intensity = slight[2];
+            }
+            else if (times < stime[3] && times > stime[4])
+            {
+                slight[3] = 1.5f;
+                flight.intensity = slight[3];
+            }
+            else if (times < stime[4] && times > 0)
+            {
+                slight[4] = 1.0f;
+                flight.intensity = slight[4];
+            }
+            if (times < 0)
+            {
+                flight.intensity = 0.0f;
+                times = 0.0f;
             }
         }
     }
