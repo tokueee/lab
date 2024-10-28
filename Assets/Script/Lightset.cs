@@ -6,15 +6,25 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 
 public class Lightset : MonoBehaviour
-{
-
-    public Light[] mylight;
+{ 
     private float minlight = 0.0f;
     private float maxlight = 3.7f;
+
+    private float timer = 60.0f;
+    private float times;
+    private float timer2;
+    private float[] stime = new float[5];
+    private float[] slight = new float[5];
+    //private int p = 7;
+    //private float[] ftime;
+
     public float starttime;
     public float dtime;
     public float keyDtime;
-    int i = 0;
+    public GameObject player;
+    public Light flight;
+    public Light[] mylight;
+    //int i = 0;
     int lightoffCount = 1;
     int count =0;
 
@@ -23,14 +33,21 @@ public class Lightset : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //mylight = gameObject.GetComponent<Light[]>();
-        GameObject player = GameObject.Find("Player");
+        //GameObject player = GameObject.Find("Player");//ñºëOïœçXÇ…íçà”
         playerscript = player.GetComponent<Player>();
+        //stime[0] = timer - 10.0f;//10ïbå„Ç…ñæÇÈÇ≥Çâ∫Ç∞ÇÈÇΩÇﬂÇÃèâä˙ê›íË
+        slight[0] = 3.5f;
+        for(int i = 0; i < 5; i++)
+        {
+            timer2 = timer - (10 * (i+1));
+            stime[i] = timer2;
+            //Debug.Log("i =" +stime[i]);
+        }
     }
 
    
 
-    IEnumerator lighting()
+    /*IEnumerator lighting()
     {
         for (i = 0; i < mylight.Length; i++)
         {
@@ -52,7 +69,7 @@ public class Lightset : MonoBehaviour
         }
         
         //Debug.Log("OK");
-    }
+    }*/
 
     IEnumerator LightOff()
     {
@@ -96,25 +113,46 @@ public class Lightset : MonoBehaviour
                 mylight[j].intensity = minlight;
                 yield return new WaitForSeconds(dtime);
             }
-            /*mylight[j].intensity = minlight;
-            //Debug.Log(j);
-            yield return new WaitForSeconds(dtime);*/
         }
     }
 
     IEnumerator Keyboard_LightOn()
     {
-        /*for (int k = 0; k < mylight.Length; k++)
+        if (playerscript.flags[1] == true)
         {
-            mylight[k].intensity = maxlight;
+            mylight[4].intensity = maxlight;
+            mylight[16].intensity = maxlight;
+            mylight[17].intensity = maxlight;
+            mylight[18].intensity = maxlight;
+            
             yield return new WaitForSeconds(keyDtime);
-        }*/
-        mylight[0].intensity = maxlight;
-        mylight[1].intensity = maxlight;
-        mylight[2].intensity = maxlight;
-        yield return new WaitForSeconds(keyDtime);
-        StartCoroutine(Keyboad_LightOff());
+            StartCoroutine(Keyboad_LightOff2());
+        }
+        if (playerscript.flags[0] == true)
+        {
+            if (mylight[2].intensity == minlight)
+            {
+                mylight[0].intensity = maxlight;
+                mylight[1].intensity = maxlight;
+                mylight[2].intensity = maxlight;
+                yield return new WaitForSeconds(keyDtime);
+                StartCoroutine(Keyboad_LightOff());
+            }
+            //Debug.Log(playerscript.flag);
+        }
+
         //Debug.Log(mylight[0]);
+    }
+
+    IEnumerator Keyboad_LightOff2() 
+    {
+        mylight[4].intensity = minlight;
+        for(int i = 16; i < 4; i++) 
+        {
+            //Debug.Log(i);
+            mylight[i].intensity = minlight;
+            yield return new WaitForSeconds(keyDtime);
+        }
     }
 
     IEnumerator Keyboad_LightOff()
@@ -126,34 +164,12 @@ public class Lightset : MonoBehaviour
         }
     }
 
-    /*void lightingset()
-    {
-        for (i = 0; i < mylight.Length; i++)
-        {
-            if (mylight[i] != null)
-            {
-                //mylight[i].intensity -= 0.001f;
-
-                if (mylight[i].intensity < minlight)
-                {
-                    mylight[i].intensity = minlight;
-                    //Debug.Log("OK");
-                }
-                else
-                {
-                    mylight[i].intensity -= 0.001f;
-                }
-                Debug.Log(mylight[i]);
-            }
-            //StartCoroutine(Wait());
-            //Debug.Log("true");
-        }
-    }*/
-
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(dtime);
         //StartCoroutine(lighting());
+        
         if(lightoffCount > count)
         {
             if (mylight[mylight.Length - 1].intensity > 0)
@@ -164,37 +180,93 @@ public class Lightset : MonoBehaviour
         }
         if (mylight[0].intensity == minlight)
         {
-            if(playerscript.flag == true)
+            if (playerscript.flags[0] == true)
             {
                 //Debug.Log("ON");
                 StartCoroutine(Keyboard_LightOn());
             }
-            /*if (Input.GetKeyDown(KeyCode.O))
+            if (playerscript.flags[1] == true)
             {
-                //Debug.Log(mylight[0].intensity);
                 StartCoroutine(Keyboard_LightOn());
-            }*/
-        }
-        /*else if (mylight[0].intensity == maxlight)
-        {
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                Debug.Log(mylight[0].intensity);
-                StartCoroutine(Keyboad_LightOff());
             }
-        }*/
-
-        //lightingset();
-
-        
-        /*if (mylight[0].intensity > 1)
+        }
+        if (flight.intensity  > 0)
         {
-            mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
-        } else
+            times =timer - Time.time;
+            Debug.Log(times);
+            if (times < stime[0] && times > stime[1])
+            {
+                slight[0] = 3.0f;
+                flight.intensity = slight[0];
+            }else if (times < stime[1] &&  times > stime[2])
+            {
+                slight[1] = 2.5f;
+                flight.intensity = slight[1];
+            }else if(times < stime[2] && times > stime[3])
+            {
+                slight[2] = 2.0f;
+                flight.intensity = slight[2];
+            }else if(times < stime[3] && times > stime[4])
+            {
+                slight[3] = 1.5f;
+                flight.intensity = slight[3];
+            }
+            else if(times < stime[4])
+            {
+                slight[4] = 1.0f;
+                flight.intensity = slight[4];
+            }
+            if(times < 0)
+            {
+                flight.intensity = 0;
+                times = 0.0f;
+            }
+            /*if(times  < 0)
+            {
+                timer = 10;
+                p -= 1;
+                flight.intensity = p * 0.5f;
+                Debug.Log("P="+ p);
+            }*/
+            
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                flight.intensity = 0.0f;
+            }
+        }
+        else if (flight.intensity == 0.0f && Input.GetKeyDown(KeyCode.F))
         {
-            mylight[1].intensity = mylight[1].intensity - Time.deltaTime;
-        }*/
-        //mylight[0].intensity = mylight[0].intensity - Time.deltaTime;
-
+            flight.intensity = slight[0];
+            if (times < stime[0] && times > stime[1])
+            {
+                slight[0] = 3.0f;
+                flight.intensity = slight[0];
+            }
+            else if (times < stime[1] && times > stime[2])
+            {
+                slight[1] = 2.5f;
+                flight.intensity = slight[1];
+            }
+            else if (times < stime[2] && times > stime[3])
+            {
+                slight[2] = 2.0f;
+                flight.intensity = slight[2];
+            }
+            else if (times < stime[3] && times > stime[4])
+            {
+                slight[3] = 1.5f;
+                flight.intensity = slight[3];
+            }
+            else if (times < stime[4] && times > 0)
+            {
+                slight[4] = 1.0f;
+                flight.intensity = slight[4];
+            }
+            if (times < 0)
+            {
+                flight.intensity = 0.0f;
+                times = 0.0f;
+            }
+        }
     }
 }
