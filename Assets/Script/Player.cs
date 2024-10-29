@@ -13,12 +13,22 @@ public class Player : MonoBehaviour
     public bool[] flags;
     //flags[0] ÇÕbuttonÇÃîªíË
     public GameObject[] Button;
-    
+
+
+    //ÉâÉCÉgópÅ´
+    [SerializeField]
+    private GameObject Light;
+    private Light player_light;
+    private bool isON = true;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-       
+        player_light = Light.GetComponent<Light>();
+        UpdateLight();
+
     }
     private void OnCollisionEnter(Collision collision)
      {
@@ -91,6 +101,11 @@ public class Player : MonoBehaviour
 
     private void Update() 
     {
+        Debug.Log(isON);
+        if (Input.GetKey(KeyCode.F))
+        {
+            ChageLight();
+        }
         //keyÇó£ÇµÇΩÇ∆Ç´Ç…é~Ç‹ÇÈ
         if (Input.GetKeyUp(KeyCode.W) ||
             Input.GetKeyUp(KeyCode.A) ||
@@ -119,5 +134,21 @@ public class Player : MonoBehaviour
         {
             SaveSpeed = 3;
         }
+    }
+    private void ChageLight()
+    {
+        isON = !isON;
+        UpdateLight();
+        // Debug.Log(isON);
+    }
+
+    private void UpdateLight()
+    {
+        player_light.enabled = isON;
+    }
+
+    public bool Lightcheck()
+    {
+        return isON;
     }
 }
