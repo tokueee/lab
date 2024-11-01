@@ -9,10 +9,15 @@ public class Player : MonoBehaviour
     CameraControll CameraCS;
     Vector3 get_see;
 
-    int keyCount;
-    bool key_W, key_A, key_S, key_D;
-    float[] global_x = new float[5], global_y = new float[5], global_z = new float[5];//移動制御変数
-    float mspeed = 3f;//加速度変数
+    [System.NonSerialized]//public変数をインスペクター上に表示したくない時に使えるやつ
+    public int keyCount;
+    [System.NonSerialized]
+    public bool key_W, key_A, key_S, key_D, key_Shift;
+    float[] global_x = new float[4], global_y = new float[4], global_z = new float[4];//移動制御変数
+    Vector3 global;
+
+    float mspeed;//速度変数
+    public float Speed_Walking, Speed_Running;
     //※int SaveSpeed = 5;//速度制御用変数
     /*public bool flag = false;
     public bool flag2 = false;*/
@@ -32,10 +37,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.useGravity = true;// リジッドボディに重力を適用
         player_light = Light.GetComponent<Light>();
         UpdateLight();
         CameraCS = GetComponent<CameraControll>();
 
+        key_Shift = true;
     }
     private void OnCollisionEnter(Collision collision)
      {
@@ -46,7 +53,7 @@ public class Player : MonoBehaviour
          }
          if (collision.gameObject == Button[1])//名前変更に注意
          {
-            flags[1] = true;
+            flags[1] = false;
          }
      }
 
@@ -71,7 +78,7 @@ public class Player : MonoBehaviour
         //各速度の値を毎度初期化
         keyCount = 0;
         key_W = false; key_A = false; key_S = false; key_D = false;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             global_x[i] = 0; global_y[i] = 0; global_z[i] = 0;
         }
@@ -132,6 +139,27 @@ public class Player : MonoBehaviour
             }
         }
 
+        //左Shiftキーを検知する
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                //SaveSpeed = 5;
+                key_Shift = true;
+            }
+            else
+            {
+                //SaveSpeed = 3;
+                key_Shift = false;
+            }
+
+            if (keyCount >= 2)
+            {
+                mspeed = mspeed / Mathf.Sqrt(2);
+                //Debug.Log(Mathf.Sqrt(2));
+
+            }
+        }
+
     }
 
     private void Update() 
@@ -164,15 +192,15 @@ public class Player : MonoBehaviour
 
         //Shiftキーでダッシュする
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (key_Shift)
             {
                 //SaveSpeed = 5;
-                mspeed = 4;
+                mspeed = Speed_Running;
             }
             else
             {
                 //SaveSpeed = 3;
-                mspeed = 2;
+                mspeed = Speed_Walking;
             }
 
             if (keyCount >= 2)
@@ -187,35 +215,36 @@ public class Player : MonoBehaviour
             if (key_W)
             {
                 //rb.AddForce(transform.forward * mspeed);
-                global_z[1] = mspeed * Mathf.Cos(get_see.y / 180 * Mathf.PI);
-                global_x[1] = mspeed * Mathf.Sin(get_see.y / 180 * Mathf.PI);
+                global_z[0] = mspeed * Mathf.Cos(get_see.y / 180 * Mathf.PI);
+                global_x[0] = mspeed * Mathf.Sin(get_see.y / 180 * Mathf.PI);
             }
             //後に進む
             if (key_S)
             {
                 //rb.AddForce(-transform.forward * mspeed);
-                global_z[3] = -mspeed * Mathf.Cos(get_see.y / 180 * Mathf.PI);
-                global_x[3] = -mspeed * Mathf.Sin(get_see.y / 180 * Mathf.PI);
+                global_z[2] = -mspeed * Mathf.Cos(get_see.y / 180 * Mathf.PI);
+                global_x[2] = -mspeed * Mathf.Sin(get_see.y / 180 * Mathf.PI);
             }
             //右に進む
             if (key_D)
             {
                 //rb.AddForce(transform.right * mspeed);
-                global_z[4] = mspeed * Mathf.Cos((get_see.y + 90) / 180 * Mathf.PI);
-                global_x[4] = mspeed * Mathf.Sin((get_see.y + 90) / 180 * Mathf.PI);
+                global_z[3] = mspeed * Mathf.Cos((get_see.y + 90) / 180 * Mathf.PI);
+                global_x[3] = mspeed * Mathf.Sin((get_see.y + 90) / 180 * Mathf.PI);
             }
             //左に進む
             if (key_A)
             {
                 //rb.AddForce(-transform.right * mspeed);
-                global_z[2] = -mspeed * Mathf.Cos((get_see.y + 90) / 180 * Mathf.PI);
-                global_x[2] = -mspeed * Mathf.Sin((get_see.y + 90) / 180 * Mathf.PI);
+                global_z[1] = -mspeed * Mathf.Cos((get_see.y + 90) / 180 * Mathf.PI);
+                global_x[1] = -mspeed * Mathf.Sin((get_see.y + 90) / 180 * Mathf.PI);
             }
 
-            global_x[0] = global_x[1] + global_x[2] + global_x[3] + global_x[4];
-            global_z[0] = global_z[1] + global_z[2] + global_z[3] + global_z[4];
+            global.x = global_x[0] + global_x[1] + global_x[2] + global_x[3];
+            global.z = global_z[0] + global_z[1] + global_z[2] + global_z[3];
+            global.y = rb.velocity.y;
 
-            rb.velocity = new Vector3(global_x[0], global_y[0], global_z[0]);
+            rb.velocity = global;
 
             Debug.Log(rb.velocity);
         }
