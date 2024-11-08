@@ -7,18 +7,21 @@ public class Player : MonoBehaviour
 {
     Rigidbody rb;
     CameraControll CameraCS;
+    Player_Light Player_Light;
     Vector3 get_see;
 
     [System.NonSerialized]//public変数をインスペクター上に表示したくない時に使えるやつ
     public int keyCount;
     [System.NonSerialized]
-    public bool key_W, key_A, key_S, key_D, key_Shift;
+    public bool key_W, key_A, key_S, key_D,key_F, key_Shift;
     float[] global_x = new float[4], global_y = new float[4], global_z = new float[4];//移動制御変数
     Vector3 global;
 
     float mspeed;//速度変数
-    public float Speed_Walking, Speed_Running;
+    public float Speed_Walking, Speed_Running;//歩く速度と走る速度
     //※int SaveSpeed = 5;//速度制御用変数
+
+
     /*public bool flag = false;
     public bool flag2 = false;*/
     public bool[] flags;
@@ -27,21 +30,25 @@ public class Player : MonoBehaviour
 
 
     //ライト用↓
-    [SerializeField]
-    private GameObject Light;
+    //[SerializeField]
+    //private GameObject Light;
+    /*
     private Light player_light;
     private bool isON = true;
+    */
 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = true;// リジッドボディに重力を適用
-        player_light = Light.GetComponent<Light>();
-        UpdateLight();
+        //player_light = Light.GetComponent<Light>();
+        //UpdateLight();
         CameraCS = GetComponent<CameraControll>();
 
+        Player_Light = GetComponent<Player_Light>();
+
+        key_F = false;
         key_Shift = true;
     }
     private void OnCollisionEnter(Collision collision)
@@ -77,7 +84,7 @@ public class Player : MonoBehaviour
         get_see = CameraCS.Rot_Camera;
         //各速度の値を毎度初期化
         keyCount = 0;
-        key_W = false; key_A = false; key_S = false; key_D = false;
+        key_W = false; key_A = false; key_S = false; key_D = false; 
         for (int i = 0; i < 4; i++)
         {
             global_x[i] = 0; global_y[i] = 0; global_z[i] = 0;
@@ -159,16 +166,11 @@ public class Player : MonoBehaviour
 
             }
         }
-
     }
 
     private void Update() 
     {
-        Debug.Log(isON);
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            ChageLight();
-        }
+        //Debug.Log(isON);
         //※keyを離したときに止まる
         {/*
             if (Input.GetKeyUp(KeyCode.W) ||
@@ -246,10 +248,19 @@ public class Player : MonoBehaviour
 
             rb.velocity = global;
 
-            Debug.Log(rb.velocity);
+            //Debug.Log(rb.velocity);
+        }
+
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Player_Light.ChageLight();
+            }
         }
     }
-    private void ChageLight()
+
+    //Player_Lightに移植済み
+    /*※private void ChageLight()
     {
         isON = !isON;
         UpdateLight();
@@ -258,11 +269,20 @@ public class Player : MonoBehaviour
 
     private void UpdateLight()
     {
-        player_light.enabled = isON;
+        //player_light.enabled = isON;
+        if (isON)
+        {
+            Light.SetActive(true);
+        }
+        else
+        {
+            Light.SetActive(false);
+        }
     }
 
     public bool Lightcheck()
     {
         return isON;
     }
+    */
 }
