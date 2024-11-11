@@ -5,17 +5,14 @@ using UnityEngine;
 public class CameraControll: MonoBehaviour
 {
     //追従して欲しいオブジェクト
-    [SerializeField]
-    private Transform target;
-    [SerializeField]
-    private Vector3 offset;
-    [SerializeField]
-    private Transform Camera;
-    [SerializeField]
-    private Transform Light;
+   
+    public Transform target;
+    public Vector3 offset;
+    public Transform camera;
+    public Transform Light;
     private float RotateSpeed = 1.5f;
 
-    private Vector3 Rot_Camera = Vector2.zero;
+    public Vector3 Rot_Camera = Vector3.zero;
 
 
     // Start is called before the first frame update
@@ -32,7 +29,7 @@ public class CameraControll: MonoBehaviour
         //カメラリセット
         if (Input.GetKey(KeyCode.R))
         {
-            Rot_Camera = Vector2.zero;
+            Rot_Camera = Vector3.zero;
         }
 
         transform.position = target.position + offset;
@@ -42,7 +39,7 @@ public class CameraControll: MonoBehaviour
         Rot_Camera.y += Input.GetAxis("Mouse X") * RotateSpeed;
 
         transform.rotation = Quaternion.Euler(0, Rot_Camera.y, 0);
-        Camera.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
+        camera.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
         Light.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
     }
 }

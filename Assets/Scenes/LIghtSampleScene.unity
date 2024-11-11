@@ -2635,8 +2635,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -2739,7 +2739,7 @@ MonoBehaviour:
   player: {fileID: 962013001}
   playercs: {fileID: 962013007}
   Startpotision: {fileID: 1994605873}
-  Speed: 100
+  Speed: 300
 --- !u!1 &955117590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2984,8 +2984,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 962013005}
   offset: {x: 0, y: 0, z: 0}
-  Camera: {fileID: 0}
+  camera: {fileID: 963194228}
   Light: {fileID: 594762888}
+  Rot_Camera: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,8 +3099,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 962013005}
   offset: {x: 0, y: 0, z: 0}
-  Camera: {fileID: 0}
-  Light: {fileID: 0}
+  camera: {fileID: 963194228}
+  Light: {fileID: 1133479473}
+  Rot_Camera: {x: 0, y: 0, z: 0}
 --- !u!1 &990023094
 GameObject:
   m_ObjectHideFlags: 0

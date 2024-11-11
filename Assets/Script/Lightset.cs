@@ -190,6 +190,7 @@ public class Lightset : MonoBehaviour
                 StartCoroutine(Keyboard_LightOn());
             }
         }
+        //‰ù’†“d“”‚Ìƒ‰ƒCƒg«
         if (flight.intensity  > 0)
         {
             times =timer - Time.time;
