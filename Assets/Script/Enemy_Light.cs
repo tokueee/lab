@@ -8,7 +8,7 @@ public class Enemy_Light : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private Player_Light playercs;
+    private Player playercs;
 
     [SerializeField]
     private Transform Startpotision;
@@ -26,7 +26,7 @@ public class Enemy_Light : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        playercs = player.GetComponent<Player_Light>();
+        playercs = player.GetComponent<Player>();
         Enemy_Position = Startpotision.transform.position;
         //  navMeshAgent.destination = Goal[destNum].position;
     }
@@ -35,7 +35,7 @@ public class Enemy_Light : MonoBehaviour
     void Update()
     {
         //navMeshAgent.speed = Speed;
-        // MoveTarget();
+       // MoveTarget();
         if (playercs.Lightcheck())
         {     
           // DirectionToPosition = DirectionToPosition.normalized;
