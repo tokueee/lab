@@ -16,8 +16,8 @@ public class Player_Light : MonoBehaviour
     public float delLtime = 60;
     public Light Light_main;
     private float[] timer = new float[2];//0=main, 1=sub
-    private float[] checktime = {0, 0};
-    private float[] time_Elapsed = {0, 0};//経過時間(一度ライトを消したときのため)0=main, 1=sub
+    private float[] checktime = { 0, 0 };
+    private float[] time_Elapsed = { 0, 0 };//経過時間(一度ライトを消したときのため)0=main, 1=sub
     private float Lv_Lm;//Light_main用
 
     //変数を追加しただけだよ↓
@@ -54,10 +54,10 @@ public class Player_Light : MonoBehaviour
                 if (isON)
                 {
                     //main & sub で利用する確認時間記録　/*ライトを点けたときに一回だけ起動してほしい*/
-                    if (!down_F) 
+                    if (!down_F)
                     {
                         checktime[0] = Time.time;
-                        if (reset_light) 
+                        if (reset_light)
                         {
                             checktime[1] = Time.time;
                             reset_light = !reset_light;
@@ -77,8 +77,8 @@ public class Player_Light : MonoBehaviour
 
                     //sub
                     {
-                        Lv_Ls[0] = 50-((50/timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
-                        Lv_Ls[1] = 25-((25/timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
+                        Lv_Ls[0] = 50 - ((50 / timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
+                        Lv_Ls[1] = 25 - ((25 / timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
                     }
                     Debug.Log(Lv_Ls[0]); Debug.Log(Lv_Ls[0]);
 
@@ -86,7 +86,7 @@ public class Player_Light : MonoBehaviour
                 if (!isON)
                 {
                     //main & sub の経過時間記録　/*ライトを消したときに一回だけ起動してほしい*/
-                    if (down_F) 
+                    if (down_F)
                     {
                         time_Elapsed[0] = time_Elapsed[0] + Time.time - checktime[0];
                         time_Elapsed[1] = time_Elapsed[1] + Time.time - checktime[1];
@@ -94,7 +94,7 @@ public class Player_Light : MonoBehaviour
                     }
                 }
 
-                
+
             }
             else
             {
@@ -131,7 +131,7 @@ public class Player_Light : MonoBehaviour
     {
         return isON;
     }
-    
+
     public void ChargeLight()
     {
         this.Lv_Lm = 3.5f;
