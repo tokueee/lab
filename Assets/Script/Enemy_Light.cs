@@ -18,6 +18,8 @@ public class Enemy_Light : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
 
+    private Vector3 targetPosition;
+
     private Vector3 Enemy_Position; // “G‚Ì‰ŠúˆÊ’u
 
     // Start is called before the first frame update
@@ -32,17 +34,34 @@ public class Enemy_Light : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //navMeshAgent.speed = Speed;
+       // MoveTarget();
         if (playercs.Lightcheck())
-        {
+        {     
+          // DirectionToPosition = DirectionToPosition.normalized;
             // navMeshAgent.isStopped = false;
             navMeshAgent.destination = player.transform.position;
         }
         else
         {
             // navMeshAgent.isStopped = true;
-            navMeshAgent.speed = Speed;
+
             navMeshAgent.destination = Startpotision.position;
         }
     }
+    private void MoveTarget()
+    {
+
+        //•ûŒü‚ğ•Ï‚¦‚é
+        Vector3 DirectionToTarget = (targetPosition - transform.position).normalized;
+        float DistanceToPlayer = DirectionToTarget.magnitude;
+        DirectionToTarget = DirectionToTarget.normalized;
+
+        Quaternion LookRotation = Quaternion.LookRotation(DirectionToTarget);
+        transform.rotation = Quaternion.Slerp(transform.rotation, LookRotation, Time.deltaTime * 5.0f); // ‰ñ“]‘¬“x‚ğ’²®
+
+        //transform.position += DirectionToTarget * Speed * Time.deltaTime;
+    }
 }
+
 
