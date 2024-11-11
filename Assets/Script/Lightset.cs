@@ -21,23 +21,23 @@ public class Lightset : MonoBehaviour
     public float starttime;
     public float dtime;
     public float keyDtime;
-    public GameObject player;
+    public GameObject buttons;
     public Light flight;
     public Light[] mylight;
     //int i = 0;
     int lightoffCount = 1;
     int count =0;
 
-    Player playerscript;
+    MouseAction mouseaction;
 
     // Start is called before the first frame update
     void Start()
     {
         //GameObject player = GameObject.Find("Player");//名前変更に注意
-        playerscript = player.GetComponent<Player>();
+        mouseaction = buttons.GetComponent<MouseAction>();
         //stime[0] = timer - 10.0f;//10秒後に明るさを下げるための初期設定
         slight[0] = 3.5f;
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < stime.Length; i++)
         {
             timer2 = timer - (10 * (i+1));
             stime[i] = timer2;
@@ -118,8 +118,9 @@ public class Lightset : MonoBehaviour
 
     IEnumerator Keyboard_LightOn()
     {
-        if (playerscript.flags[1] == true)
+        if (mouseaction.Buttonj2() == true)
         {
+            Debug.Log("ON");
             mylight[4].intensity = maxlight;
             mylight[16].intensity = maxlight;
             mylight[17].intensity = maxlight;
@@ -128,7 +129,7 @@ public class Lightset : MonoBehaviour
             yield return new WaitForSeconds(keyDtime);
             StartCoroutine(Keyboad_LightOff2());
         }
-        if (playerscript.flags[0] == true)
+        if (mouseaction.Buttonj1() == true)
         {
             if (mylight[2].intensity == minlight)
             {
@@ -167,7 +168,7 @@ public class Lightset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(dtime);
+        //Debug.Log(Input.GetAxis("Mouse X"));
         //StartCoroutine(lighting());
         
         if(lightoffCount > count)
@@ -180,21 +181,20 @@ public class Lightset : MonoBehaviour
         }
         if (mylight[0].intensity == minlight)
         {
-            if (playerscript.flags[0] == true)
+            if (mouseaction.Buttonj1() == true)
             {
                 //Debug.Log("ON");
                 StartCoroutine(Keyboard_LightOn());
             }
-            if (playerscript.flags[1] == true)
+            if (mouseaction.Buttonj2() == true)
             {
                 StartCoroutine(Keyboard_LightOn());
             }
         }
-        //懐中電灯のライト↓
-        if (flight.intensity  > 0)
+        /*if (flight.intensity  > 0)
         {
             times =timer - Time.time;
-            Debug.Log(times);
+            //Debug.Log(times);
             if (times < stime[0] && times > stime[1])
             {
                 slight[0] = 3.0f;
@@ -217,7 +217,7 @@ public class Lightset : MonoBehaviour
                 slight[4] = 1.0f;
                 flight.intensity = slight[4];
             }
-            if(times < 0)
+            if (times < 0)
             {
                 flight.intensity = 0;
                 times = 0.0f;
@@ -228,7 +228,7 @@ public class Lightset : MonoBehaviour
                 p -= 1;
                 flight.intensity = p * 0.5f;
                 Debug.Log("P="+ p);
-            }*/
+            }
             
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -268,6 +268,6 @@ public class Lightset : MonoBehaviour
                 flight.intensity = 0.0f;
                 times = 0.0f;
             }
-        }
+        }*/
     }
 }
