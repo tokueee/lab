@@ -22,8 +22,12 @@ public class Lightset : MonoBehaviour
     public float dtime;
     public float keyDtime;
     public GameObject buttons;
-    public Light flight;
+    //public Light flight;
+    [SerializeField]
+    private GameObject[] light;
+
     public Light[] mylight;
+
     //int i = 0;
     int lightoffCount = 1;
     int count =0;
@@ -43,6 +47,23 @@ public class Lightset : MonoBehaviour
             stime[i] = timer2;
             //Debug.Log("i =" +stime[i]);
         }
+        /*foreach(GameObject game in light)
+        {
+            Debug.Log(game.name);
+        }*/
+
+        /*s_light.SetActive(false);
+        l_light.SetActive(false);
+        l_light2.SetActive(false);
+        l_light3.SetActive(false);
+        */
+
+        /*for(int i = 0;i < s_light.Length; i++)
+        {
+            s_light[i].SetActive(false);
+        }*/
+        
+        //タグ確認用
     }
 
    
@@ -74,43 +95,43 @@ public class Lightset : MonoBehaviour
     IEnumerator LightOff()
     {
         yield return new WaitForSeconds(starttime);
-        mylight[0].intensity = minlight;
+        light[0].SetActive(false);
         yield return new WaitForSeconds(dtime);
-        mylight[1].intensity = minlight;
-        mylight[2].intensity = minlight;
+        light[1].SetActive(false);
+        light[2].SetActive(false);
         yield return new WaitForSeconds(dtime);
-        for(int j = 0;j < mylight.Length;j++)
+        for(int j = 0;j < light.Length;j++)
         {
-            if (mylight[j].intensity == maxlight)
+            if (light[j].activeSelf == true)
             {
-                if (mylight[j] == mylight[6])
+                if (light[j] == light[6])
                 {
-                    mylight[6].intensity = minlight;
-                    mylight[7].intensity = minlight;
-                    mylight[16].intensity = minlight;
+                    light[6].SetActive(false);
+                    light[7].SetActive(false);
+                    light[16].SetActive(false);
                     yield return new WaitForSeconds(dtime);
-                }else if (mylight[j] == mylight[8])
+                }else if (light[j] == light[8])
                 {
-                    mylight[8].intensity = minlight;
-                    mylight[9].intensity = minlight;
-                    mylight[17].intensity = minlight;
-                    yield return new WaitForSeconds(dtime);
-                }
-                if (mylight[j] == mylight[10])
-                {
-                    mylight[10].intensity = minlight;
-                    mylight[12].intensity = minlight;
-                    mylight[18].intensity = minlight;
+                    light[8].SetActive(false);
+                    light[9].SetActive(false);
+                    light[17].SetActive(false);
                     yield return new WaitForSeconds(dtime);
                 }
-                if (mylight[j] == mylight[11])
+                if (light[j] == light[10])
                 {
-                    mylight[11].intensity = minlight;
-                    mylight[13].intensity = minlight;
-                    mylight[19].intensity = minlight;
+                    light[10].SetActive(false);
+                    light[12].SetActive(false);
+                    light[18].SetActive(false);
                     yield return new WaitForSeconds(dtime);
                 }
-                mylight[j].intensity = minlight;
+                if (light[j] == light[11])
+                {
+                    light[11].SetActive(false);
+                    light[13].SetActive(false);
+                    light[19].SetActive(false);
+                    yield return new WaitForSeconds(dtime);
+                }
+                light[j].SetActive(false);
                 yield return new WaitForSeconds(dtime);
             }
         }
@@ -120,22 +141,25 @@ public class Lightset : MonoBehaviour
     {
         if (mouseaction.Buttonj2() == true)
         {
-            Debug.Log("ON");
-            mylight[4].intensity = maxlight;
-            mylight[16].intensity = maxlight;
-            mylight[17].intensity = maxlight;
-            mylight[18].intensity = maxlight;
+            if (light[18].activeSelf == false)
+            {
+                Debug.Log("ON");
+                light[4].SetActive(true);
+                light[16].SetActive(true);
+                light[17].SetActive(true);
+                light[18].SetActive(true);
+            }
             
             yield return new WaitForSeconds(keyDtime);
             StartCoroutine(Keyboad_LightOff2());
         }
         if (mouseaction.Buttonj1() == true)
         {
-            if (mylight[2].intensity == minlight)
+            if (light[2].activeSelf == false)
             {
-                mylight[0].intensity = maxlight;
-                mylight[1].intensity = maxlight;
-                mylight[2].intensity = maxlight;
+                light[0].SetActive(true);
+                light[1].SetActive(true);
+                light[2].SetActive(true);
                 yield return new WaitForSeconds(keyDtime);
                 StartCoroutine(Keyboad_LightOff());
             }
@@ -147,20 +171,20 @@ public class Lightset : MonoBehaviour
 
     IEnumerator Keyboad_LightOff2() 
     {
-        mylight[4].intensity = minlight;
+        light[4].SetActive(false);
         for(int i = 16; i < 4; i++) 
         {
             //Debug.Log(i);
-            mylight[i].intensity = minlight;
+            light[i].SetActive(false);
             yield return new WaitForSeconds(keyDtime);
         }
     }
 
     IEnumerator Keyboad_LightOff()
     {
-        for (int k = 0; k < mylight.Length; k++)
+        for (int k = 0; k < light.Length; k++)
         {
-            mylight[k].intensity = minlight;
+            light[k].SetActive(false);
             yield return new WaitForSeconds(keyDtime);
         }
     }
@@ -173,13 +197,14 @@ public class Lightset : MonoBehaviour
         
         if(lightoffCount > count)
         {
-            if (mylight[mylight.Length - 1].intensity > 0)
+            if (light[light.Length - 1].activeSelf == true)
             {
+                Debug.Log("OK");
                 StartCoroutine(LightOff());
                 count++;
             }
         }
-        if (mylight[0].intensity == minlight)
+        if (light[0].activeSelf == false)
         {
             if (mouseaction.Buttonj1() == true)
             {
@@ -268,6 +293,12 @@ public class Lightset : MonoBehaviour
                 flight.intensity = 0.0f;
                 times = 0.0f;
             }
+        }*/
+        /*if (mylight[1].intensity == minlight)
+        {
+            Debug.Log("true");
+            light.SetActive(false);
+            //タグ確認
         }*/
     }
 }
