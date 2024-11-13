@@ -15,6 +15,7 @@ public class Lightset : MonoBehaviour
     private float timer2;
     private float[] stime = new float[5];
     private float[] slight = new float[5];
+    private int num;
     //private int p = 7;
     //private float[] ftime;
 
@@ -47,20 +48,20 @@ public class Lightset : MonoBehaviour
             stime[i] = timer2;
             //Debug.Log("i =" +stime[i]);
         }
-        /*foreach(GameObject game in light)
+        /*- foreach(GameObject game in light)
         {
             Debug.Log(game.name);
         }*/
 
-        /*s_light.SetActive(false);
+        /*- s_light.SetActive(false);
         l_light.SetActive(false);
         l_light2.SetActive(false);
         l_light3.SetActive(false);
         */
 
-        /*for(int i = 0;i < s_light.Length; i++)
+        /* -for(int i = 0;i < s_light.Length; i++)
         {
-            s_light[i].SetActive(false);
+            light[i].SetActive(false);
         }*/
         
         //タグ確認用
@@ -68,7 +69,7 @@ public class Lightset : MonoBehaviour
 
    
 
-    /*IEnumerator lighting()
+    /* -IEnumerator lighting()
     {
         for (i = 0; i < mylight.Length; i++)
         {
@@ -139,6 +140,19 @@ public class Lightset : MonoBehaviour
 
     IEnumerator Keyboard_LightOn()
     {
+        if (mouseaction.Buttonj1() == true)
+        {
+            if (light[2].activeSelf == false)
+            {
+                num = 0;
+                light[0].SetActive(true);
+                light[1].SetActive(true);
+                light[2].SetActive(true);
+                yield return new WaitForSeconds(keyDtime);
+                StartCoroutine(Keyboad_LightOff());
+            }
+            //Debug.Log(playerscript.flag);
+        }
         if (mouseaction.Buttonj2() == true)
         {
             if (light[18].activeSelf == false)
@@ -153,26 +167,61 @@ public class Lightset : MonoBehaviour
             yield return new WaitForSeconds(keyDtime);
             StartCoroutine(Keyboad_LightOff2());
         }
-        if (mouseaction.Buttonj1() == true)
+        if (mouseaction.Buttonj3() == true)
         {
-            if (light[2].activeSelf == false)
+            if (light[7].activeSelf == false)
             {
-                light[0].SetActive(true);
-                light[1].SetActive(true);
-                light[2].SetActive(true);
+                num = 5;
+                light[5].SetActive(true);
+                light[6].SetActive(true);
+                light[7].SetActive(true);
                 yield return new WaitForSeconds(keyDtime);
                 StartCoroutine(Keyboad_LightOff());
             }
-            //Debug.Log(playerscript.flag);
+        }
+        if (mouseaction.Buttonj4() == true)
+        {
+            if (light[15].activeSelf == false)
+            {
+                num = 12;
+                light[12].SetActive(true);
+                light[13].SetActive(true);
+                light[14].SetActive(true);
+                light[15].SetActive(true);
+                yield return new WaitForSeconds(keyDtime);
+                StartCoroutine(Keyboad_LightOff());
+            }
+        }
+        if (mouseaction.Buttonj5() == true)
+        {
+            if (light[11].activeSelf == false)
+            {
+                num = 8;
+                light[8].SetActive(true);
+                light[9].SetActive(true);
+                light[10].SetActive(true);
+                light[11].SetActive(true);
+                yield return new WaitForSeconds(keyDtime);
+                StartCoroutine(Keyboad_LightOff());
+            }
         }
 
         //Debug.Log(mylight[0]);
     }
 
-    IEnumerator Keyboad_LightOff2() 
+
+    IEnumerator Keyboad_LightOff()
+    {
+        for (int k = num; k < light.Length; k++)
+        {
+            light[k].SetActive(false);
+            yield return new WaitForSeconds(keyDtime);
+        }
+    }
+    IEnumerator Keyboad_LightOff2()
     {
         light[4].SetActive(false);
-        for(int i = 16; i < 4; i++) 
+        for (int i = 16; i < 4; i++)
         {
             //Debug.Log(i);
             light[i].SetActive(false);
@@ -180,14 +229,32 @@ public class Lightset : MonoBehaviour
         }
     }
 
-    IEnumerator Keyboad_LightOff()
+    /*- IEnumerator Keyboad_LightOff3()
     {
-        for (int k = 0; k < light.Length; k++)
+        for (int k = 5; k < light.Length; k++)
         {
             light[k].SetActive(false);
             yield return new WaitForSeconds(keyDtime);
         }
     }
+
+    IEnumerator Keyboad_LightOff4()
+    {
+        for (int k = 12; k < light.Length; k++)
+        {
+            light[k].SetActive(false);
+            yield return new WaitForSeconds(keyDtime);
+        }
+    }
+
+    IEnumerator Keyboad_LightOff5()
+    {
+        for (int k = 8; k < light.Length; k++)
+        {
+            light[k].SetActive(false);
+            yield return new WaitForSeconds(keyDtime);
+        }
+    }*/
 
     // Update is called once per frame
     void Update()
@@ -204,8 +271,10 @@ public class Lightset : MonoBehaviour
                 count++;
             }
         }
-        if (light[0].activeSelf == false)
-        {
+        if(mouseaction.flagjudge() == true) { StartCoroutine(Keyboard_LightOn()); }
+
+        /* - if (light[0].activeSelf == false)
+        { 
             if (mouseaction.Buttonj1() == true)
             {
                 //Debug.Log("ON");
@@ -215,8 +284,8 @@ public class Lightset : MonoBehaviour
             {
                 StartCoroutine(Keyboard_LightOn());
             }
-        }
-        /*if (flight.intensity  > 0)
+        }*/
+        /* - if (flight.intensity  > 0)
         {
             times =timer - Time.time;
             //Debug.Log(times);
@@ -294,7 +363,7 @@ public class Lightset : MonoBehaviour
                 times = 0.0f;
             }
         }*/
-        /*if (mylight[1].intensity == minlight)
+        /* -if (mylight[1].intensity == minlight)
         {
             Debug.Log("true");
             light.SetActive(false);
