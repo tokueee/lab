@@ -75,7 +75,7 @@ public class Controls_text : MonoBehaviour
     void Start()
     {
         panel = GameObject.Find("Panel");
-        //panel.SetActive(false);
+        panel.SetActive(false);
         TextSet();//‰Šúİ’è
     }
 

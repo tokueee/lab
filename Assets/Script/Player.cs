@@ -26,10 +26,7 @@ public class Player : MonoBehaviour
     public bool flag2 = false;*/
     public bool[] flags;
     //flags[0] ÇÕbuttonÇÃîªíË
-    //public GameObject[] Button;
-    
-    [SerializeField] private GameObject s_object;
-    private bool sta;
+    public GameObject[] Button;
 
 
     //ÉâÉCÉgópÅ´
@@ -54,22 +51,7 @@ public class Player : MonoBehaviour
         key_F = false;
         key_Shift = true;
     }
-
-    public bool StartPlane()
-    {
-        return sta;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == s_object)
-        {
-            sta = true;
-            StartPlane();
-            //Debug.Log(sta);
-        }
-    }
-
-    /*private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
      {
          if (collision.gameObject == Button[0])
          {
@@ -93,7 +75,7 @@ public class Player : MonoBehaviour
          {
             flags[1] =false;
          }
-     }*/
+     }
 
 
     // Update is called once per frame
