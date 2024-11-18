@@ -19,15 +19,20 @@ public class EnemyControll : MonoBehaviour
     private bool isChasing = false;
 
     [SerializeField]
-    private Transform[] Gaol;
+    private Transform[] Goal;
 
     private int destNum = 0;
+
+    public GameObject Cnoi;
+    CameraNoise noise;
 
     // Start is called before the first frame update
     void Start()
     {
         nevMeshAgent = GetComponent<NavMeshAgent>();
-        nevMeshAgent.destination = Gaol[destNum].position;
+        nevMeshAgent.destination = Goal[destNum].position;
+
+        noise = Cnoi.GetComponent<CameraNoise>();
     }
 
     // Update is called once per frame
@@ -39,10 +44,12 @@ public class EnemyControll : MonoBehaviour
         if (isChasing == true)
         {
             nevMeshAgent.destination = player.transform.position;
+            noise.enabled = true;
         }
         else
         {
             if (nevMeshAgent.remainingDistance < 0.5f) { Patrol(); }
+            noise.enabled=false;
         }
     }
 
@@ -83,7 +90,7 @@ public class EnemyControll : MonoBehaviour
             {
                 destNum = 0;
             }
-            nevMeshAgent.destination = Gaol[destNum].position;
+            nevMeshAgent.destination = Goal[destNum].position;
         }
     }
 }
