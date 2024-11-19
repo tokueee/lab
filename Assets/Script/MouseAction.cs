@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,6 +64,7 @@ public class MouseAction : MonoBehaviour
     }
 
     // Update is called once per frame
+    
     void Update()
     {
         /*mpos_x = Input.mousePosition.x;
@@ -168,31 +170,35 @@ public class MouseAction : MonoBehaviour
             }
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 5,false);
         }
-
-        if(Input.GetMouseButtonUp(0))
+        if (buttons != null)
         {
-            for(int i = 0; i < buttons.flag2.Length; i++)
+            if (Input.GetMouseButtonUp(0))
             {
-                if (buttons.flag2[i] == true)
+                for (int i = 0; i < buttons.flag2.Length; i++)
+                {
+                    if (buttons.flag2[i] == true)
+                    {
+                        mremove = true;
+                        continue;
+                    }
+                }
+                /*if (buttons.flag2[0] || buttons.flag2[1])
                 {
                     mremove = true;
-                    continue;
-                }
+                    //buttons.flag2[0] = false ;
+                 }*/
             }
-            /*if (buttons.flag2[0] || buttons.flag2[1])
-            {
-                mremove = true;
-                //buttons.flag2[0] = false ;
-             }*/
-        }
+        }            
         
         if (mremove)
         {
-            times = Time.time;
-            stimer = times % 10.1f;
-            //Debug.Log(stimer);
-            if(stimer > 10)
+            
+            times = times +Time.deltaTime;
+            //stimer = times% 10.1f;
+            //Debug.Log(times);
+            if(times > 10)
             {
+                times = 0f;
                 mremove = false;
                 for(int flag = 0; flag < buttons.flag2.Length; flag++)
                 {
@@ -201,14 +207,6 @@ public class MouseAction : MonoBehaviour
 
             }
         }
-        /*if (mpos_x >= mposmin_x && mpos_y >= mposmin_y && mpos_x <= mposmax_x && mpos_y <= mposmax_y)
-        {
-            //Debug.Log(Input.mousePosition);
-            if (players != null)
-            {
-                Debug.Log(hit.collider.transform.position);
-            }
-        }*/
         
     }
 }
