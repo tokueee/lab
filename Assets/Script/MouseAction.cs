@@ -15,9 +15,11 @@ public class MouseAction : MonoBehaviour
     private float mposmax_y = 410;
     private float mposmin_y = 320;*/
     ButtonJudge buttons;
+    Player_Light plight;
+    ChargeButton cbutton;
 
     private float times;
-    private float stimer;
+    //private float stimer;
     private bool mremove = false;
     private bool flags;
 
@@ -25,7 +27,8 @@ public class MouseAction : MonoBehaviour
     void Start()
     {
         buttons = FindObjectOfType<ButtonJudge>();
-        
+        plight = FindObjectOfType<Player_Light>();
+        cbutton = FindObjectOfType<ChargeButton>();
         //Debug.Log(buttons.button[1]);
         //Debug.Log(buttons.flag2);
     }
@@ -165,7 +168,14 @@ public class MouseAction : MonoBehaviour
                         Buttonj4();
                     }*/
                     flagjudge();
-                   
+                }          
+                if(plight != null)
+                {
+                    if(hit.collider.gameObject == cbutton.charge)
+                    {
+                        Debug.Log("true");
+                        plight.ChargeLight();
+                    }
                 }
             }
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 5,false);

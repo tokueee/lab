@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 
@@ -8,27 +9,32 @@ public class CameraNoise : MonoBehaviour
     
     //MainCameraにアタッチしてNoiseMateを設定する
     public Material noiseMaterial;
-    [Range(0, 1)]
-    float noiseAmount = 0.1f;//publicの優先度が高いためpublicを使っていない
-    Color noiseColor = Color.white;
+    /*[Range(0, 1)]
+    private float noiseAmount = 0.1f;//publicの優先度が高いためpublicを使っていない
+    private Color noiseColor = Color.white;
 
     private float timer;
     private float set_time;
     private float times = 6.0f;
-    private bool oneTime = false;
-    void Start()
-        {
+    private bool oneTime = false;*/
+    private float Transparency;
 
-        }
+    public void setTrans(float num){ Transparency = num;}
+
+    public float getTrans(){ return Transparency;}
+    void Start()
+    {
+    }
     void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
         if (noiseMaterial != null)
         {
             // ノイズの強さを調整
-            noiseMaterial.SetFloat("_NoiseAmount", noiseAmount);
+            //noiseMaterial.SetFloat("_NoiseAmount", noiseAmount);
 
-            noiseMaterial.SetColor("_NoiseColor", noiseColor);
+            //noiseMaterial.SetColor("_NoiseColor", noiseColor);
             //Debug.Log(noiseColor);
+            noiseMaterial.SetFloat("_Transparency", Transparency);
             // ノイズエフェクトをカメラのレンダリングに適用
             Graphics.Blit(src, dest, noiseMaterial);
             
@@ -44,7 +50,7 @@ public class CameraNoise : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer = Time.time;
+        /*timer = Time.time;
         set_time = timer % 11;
         if(set_time > times && oneTime == false)
         {
@@ -55,7 +61,7 @@ public class CameraNoise : MonoBehaviour
             oneTime= false;
             noiseColor = Color.white;
         }
-        Debug.Log(set_time);
+        Debug.Log(set_time);*/
 
     }
 }
