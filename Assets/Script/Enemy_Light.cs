@@ -22,11 +22,23 @@ public class Enemy_Light : MonoBehaviour
 
     private Vector3 Enemy_Position; // 敵の初期位置
 
+    //LightEnemyの座標取得用
+    [SerializeField] private GameObject Lenemy;
+
+    //スクリプト取得用
+    [SerializeField] private GameObject enemy2;
+    [SerializeField] private EnemyControll econ;
+
+    //距離計算後の代入用
+    private float distans;
+
+
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         playercs = player.GetComponent<Player_Light>();
+        econ = enemy2.GetComponent<EnemyControll>();
         Enemy_Position = Startpotision.transform.position;
         //  navMeshAgent.destination = Goal[destNum].position;
     }
@@ -34,6 +46,11 @@ public class Enemy_Light : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distans = Vector3.Distance(Lenemy.transform.position,player.transform.position);
+        int inum = econ.DisNum(distans);//距離に応じて返す関数呼び出し
+        //Debug.Log(inum);
+        econ.Dtrans(inum);//距離に応じてノイズの強さを変える関数呼び出し
+
         //navMeshAgent.speed = Speed;
        // MoveTarget();
         if (playercs.Lightcheck())
@@ -41,6 +58,7 @@ public class Enemy_Light : MonoBehaviour
           // DirectionToPosition = DirectionToPosition.normalized;
             // navMeshAgent.isStopped = false;
             navMeshAgent.destination = player.transform.position;
+            
         }
         else
         {

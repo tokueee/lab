@@ -23,9 +23,9 @@ public class EnemyControll : MonoBehaviour
 
     private int destNum = 0;
 
-    public GameObject Cnoi;//Script取得用
+    [SerializeField] private GameObject Cnoi;//Script取得用
     [SerializeField] private GameObject enemy;//距離取得の為にエネミー取得
-    CameraNoise noise;//Script取得用2
+    [SerializeField] private CameraNoise noise;//Script取得用2
     private float dis;//距離計算後の代入用変数
 
     //ノイズの透過度の値
@@ -52,7 +52,7 @@ public class EnemyControll : MonoBehaviour
     }
 
     //距離に応じて返す関数
-    private int DisNum(float dist)
+    public int DisNum(float dist)
     {
         if (dist < cdist) return 0;
         if (dist < mdist) return 1;
@@ -61,16 +61,41 @@ public class EnemyControll : MonoBehaviour
         return 4;
     }
 
+    //距離に応じてノイズの強さを変える関数
+    public void Dtrans(float distnum)
+    {
+        switch (distnum)
+        {
+            //disnumの値に応じて実行する
+            case 0:
+                noise.setTrans(lmax);
+                noise.enabled = true; break;
+            case 1:
+                noise.setTrans(lightmin_c);
+                noise.enabled = true; break;
+            case 2:
+                noise.setTrans(lmid);
+                noise.enabled = true; break;
+            case 3:
+                noise.setTrans(lmin);
+                noise.enabled = true; break;
+            case 4:
+                noise.setTrans(0.0f);
+                noise.enabled = true; break;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     { 
         CheckPlayer();
         dis = Vector3.Distance(enemy.transform.position,player.transform.position);
-        //プレイヤーと敵の距離計算
+        //プレイヤーと敵の直線距離計算
         //Debug.Log(dis);
         int disnum = DisNum(dis);
         //Debug.Log(disnum);
-        switch (disnum)
+        Dtrans(disnum);
+        /*switch (disnum)
         {
             //disnumの値に応じて実行する
             case 0:
@@ -88,7 +113,7 @@ public class EnemyControll : MonoBehaviour
             case 4:
                 noise.setTrans(0.0f);
                 noise.enabled = true; break;
-        }
+        }*/
         // Debug.Log(Enemy_Angle);
         // Debug.Log(Enemy_View);
         if (isChasing == true)

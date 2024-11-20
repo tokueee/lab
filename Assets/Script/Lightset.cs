@@ -24,8 +24,10 @@ public class Lightset : MonoBehaviour
     public float starttime;
     public float dtime;
     public float keyDtime;
-    public GameObject buttons;
-    public GameObject playcs;
+    [SerializeField] private GameObject buttons;
+    [SerializeField] private GameObject playcs;
+    [SerializeField] private MouseAction mouseaction;
+    [SerializeField] private Player player;
     //public GameObject noi;
     //public Light flight;
     [SerializeField]
@@ -37,10 +39,6 @@ public class Lightset : MonoBehaviour
     int lightoffCount = 1;
     int count =0;
 
-    MouseAction mouseaction;
-    Player player;
-    //CameraNoise noise;
-    //noise.enable = true/falseでスクリプトON/OFF
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +47,6 @@ public class Lightset : MonoBehaviour
 
         mouseaction = buttons.GetComponent<MouseAction>();
         player = playcs.GetComponent<Player>();
-        //noise = noi.GetComponent<CameraNoise>();
 
         //stime[0] = timer - 10.0f;//10秒後に明るさを下げるための初期設定
         slight[0] = 3.5f;
@@ -155,6 +152,7 @@ public class Lightset : MonoBehaviour
         {
             if (light[2].activeSelf == false)
             {
+                //light[2]が消えているなら実行
                 num = 0;
                 maxnum = 2;
                 light[0].SetActive(true);
@@ -169,7 +167,8 @@ public class Lightset : MonoBehaviour
         {
             if (light[18].activeSelf == false)
             {
-                Debug.Log("ON");
+                //Debug.Log("ON");
+                //light[18]が消えているなら実行
                 num = 16;
                 maxnum = 18;
                 nf = true;
@@ -186,6 +185,7 @@ public class Lightset : MonoBehaviour
         {
             if (light[7].activeSelf == false)
             {
+                //light[7]が消えているなら実行
                 num = 5;
                 maxnum = 7;
                 light[5].SetActive(true);
@@ -199,6 +199,7 @@ public class Lightset : MonoBehaviour
         {
             if (light[15].activeSelf == false)
             {
+                //light[15]が消えているなら実行
                 num = 12;
                 maxnum = 15;
                 light[12].SetActive(true);
@@ -213,6 +214,7 @@ public class Lightset : MonoBehaviour
         {
             if (light[11].activeSelf == false)
             {
+                //light[11]が消えているなら実行
                 num = 8;
                 maxnum = 11;
                 light[8].SetActive(true);
@@ -232,6 +234,7 @@ public class Lightset : MonoBehaviour
     {
         if(nf == true)
         {
+            //light[4]だけ他ライトと値が離れているのでここで消す
             light[4].SetActive(false);
             nf = false;
             yield return new WaitForSeconds(keyDtime);
@@ -293,7 +296,7 @@ public class Lightset : MonoBehaviour
             {
                 if (light[light.Length - 1].activeSelf == true)
                 {
-                    Debug.Log("OK");
+                    //Debug.Log("OK");
                     StartCoroutine(LightOff());
                     count++;
                 }
