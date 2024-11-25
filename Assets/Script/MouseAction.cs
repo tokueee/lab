@@ -86,7 +86,8 @@ public class MouseAction : MonoBehaviour
                         //ライトのボタンを押しているのか検出するためのif分
                         if (hit.collider.gameObject == buttons.button[h])
                         {
-                            if (buttons.button[h] && buttons.flag2[h] == false)
+                            buttons.Getnum(h);   
+                            /*if (buttons.button[h] && buttons.flag2[h] == false)
                             {
                                 buttons.flag2[h] = true;
                                 //Debug.Log("good");
@@ -95,6 +96,8 @@ public class MouseAction : MonoBehaviour
                             {
                                 buttons.flag2[h] = true;
                             }
+                            buttons.enemyLSpot[h].color = Color.red;
+                            buttons.enemyLSpotP[h].color = Color.red;*/
                         }
                     }
 

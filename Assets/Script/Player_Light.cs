@@ -24,7 +24,7 @@ public class Player_Light : MonoBehaviour
     private float[] timer = new float[2];//0=main, 1=sub
     private float[] checktime = {0, 0};
     private float[] time_Elapsed = {0, 0};//経過時間(一度ライトを消したときのため)0=main, 1=sub
-    private float Lv_Lm;//Light_main用
+    public float Lv_Lm;//Light_main用
     private float[] Lv_Ls = new float[2];//0=Renge, 1=Spot Angle
     private float scale_bar =1;
     //private float time_Elapsed2 = 0;//経過時間(一度ライトを消したときのため)sub
