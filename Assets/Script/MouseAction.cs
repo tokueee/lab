@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,11 +14,10 @@ public class MouseAction : MonoBehaviour
     private float mposmax_y = 410;
     private float mposmin_y = 320;*/
     ButtonJudge buttons;
-    Player_Light plight;
-    ChargeButton cbutton;
+    Battelys battelys;
 
     private float times;
-    //private float stimer;
+    private float stimer;
     private bool mremove = false;
     private bool flags;
 
@@ -27,8 +25,8 @@ public class MouseAction : MonoBehaviour
     void Start()
     {
         buttons = FindObjectOfType<ButtonJudge>();
-        plight = FindObjectOfType<Player_Light>();
-        cbutton = FindObjectOfType<ChargeButton>();
+        battelys = FindObjectOfType<Battelys>();
+        
         //Debug.Log(buttons.button[1]);
         //Debug.Log(buttons.flag2);
     }
@@ -66,8 +64,9 @@ public class MouseAction : MonoBehaviour
         else if (buttons.flag2[4] == true) { Buttonj5(); }
     }
 
-    // Update is called once per frame
     
+
+    // Update is called once per frame
     void Update()
     {
         /*mpos_x = Input.mousePosition.x;
@@ -83,7 +82,8 @@ public class MouseAction : MonoBehaviour
                 if (buttons != null)
                 {
                     for(int h = 0; h < buttons.button.Length; h++)
-                    {  
+                    {
+                        //ライトのボタンを押しているのか検出するためのif分
                         if (hit.collider.gameObject == buttons.button[h])
                         {
                             if (buttons.button[h] && buttons.flag2[h] == false)
@@ -97,118 +97,121 @@ public class MouseAction : MonoBehaviour
                             }
                         }
                     }
+
+
+                    for (int j = 0; j < battelys.Battely.Length; j++)
+                    {
+                        if (hit.collider.gameObject == battelys.Battely[j])
+                        {
+                            battelys.Get_num(j);
+                        }
+                    }
                     Buttonflag();
-                    /*if (buttons.flag2[0] == true) { Buttonj1(); }
-                    else if (buttons.flag2[1] == true) { Buttonj2(); }
-                    else if (buttons.flag2[2] == true) { Buttonj3(); }
-                    else if (buttons.flag2[3] == true) { Buttonj4(); }
-                    else if (buttons.flag2[4] == true) { Buttonj5(); }*/
-                    /*if (hit.collider.gameObject == buttons.button[0])
+
+                    //※
                     {
-                        if (buttons.button[0] && buttons.flag2[0] == false)
+                        /*if (buttons.flag2[0] == true) { Buttonj1(); }
+                        else if (buttons.flag2[1] == true) { Buttonj2(); }
+                        else if (buttons.flag2[2] == true) { Buttonj3(); }
+                        else if (buttons.flag2[3] == true) { Buttonj4(); }
+                        else if (buttons.flag2[4] == true) { Buttonj5(); }*/
+                        /*if (hit.collider.gameObject == buttons.button[0])
                         {
-                            buttons.flag2[0] = true;
-                            //Debug.Log("good");
+                            if (buttons.button[0] && buttons.flag2[0] == false)
+                            {
+                                buttons.flag2[0] = true;
+                                //Debug.Log("good");
+                            }
+                            else if (buttons.button[0] && buttons.flag2[0])
+                            {
+                                buttons.flag2[0] = true;
+                            }
+                            Buttonj1();
                         }
-                        else if (buttons.button[0] && buttons.flag2[0])
+                        if (hit.collider.gameObject == buttons.button[1])
                         {
-                            buttons.flag2[0] = true;
+                            if (buttons.button[1]  && buttons.flag2[1] == false)
+                            {
+                                buttons.flag2[1] = true;
+                            }
+                            else if (buttons.button[1] && buttons.flag2[1])
+                            {
+                                buttons.flag2[1] = true;
+                            }
+                            Buttonj2();
                         }
-                        Buttonj1();
-                    }
-                    if (hit.collider.gameObject == buttons.button[1])
-                    {
-                        if (buttons.button[1]  && buttons.flag2[1] == false)
+
+                        if (hit.collider.gameObject == buttons.button[2])
                         {
-                            buttons.flag2[1] = true;
+                            if (buttons.button[2] && buttons.flag2[2] == false)
+                            {
+                                buttons.flag2[2] = true;
+                            }
+                            else if (buttons.button[2] && buttons.flag2[2])
+                            {
+                                buttons.flag2[2] = true;
+                            }
+                            Buttonj3();
                         }
-                        else if (buttons.button[1] && buttons.flag2[1])
+
+                        if (hit.collider.gameObject == buttons.button[3])
                         {
-                            buttons.flag2[1] = true;
+                            if (buttons.button[3] && buttons.flag2[3] == false)
+                            {
+                                buttons.flag2[3] = true;
+                            }
+                            else if (buttons.button[3] && buttons.flag2[3])
+                            {
+                                buttons.flag2[3] = true;
+                            }
+                            Buttonj4();
                         }
-                        Buttonj2();
+
+                        if (hit.collider.gameObject == buttons.button[4])
+                        {
+                            if (buttons.button[4] && buttons.flag2[4] == false)
+                            {
+                                buttons.flag2[4] = true;
+                            }
+                            else if (buttons.button[4] && buttons.flag2[4])
+                            {
+                                buttons.flag2[4] = true;
+                            }
+                            Buttonj4();
+                        }*/
                     }
 
-                    if (hit.collider.gameObject == buttons.button[2])
-                    {
-                        if (buttons.button[2] && buttons.flag2[2] == false)
-                        {
-                            buttons.flag2[2] = true;
-                        }
-                        else if (buttons.button[2] && buttons.flag2[2])
-                        {
-                            buttons.flag2[2] = true;
-                        }
-                        Buttonj3();
-                    }
-
-                    if (hit.collider.gameObject == buttons.button[3])
-                    {
-                        if (buttons.button[3] && buttons.flag2[3] == false)
-                        {
-                            buttons.flag2[3] = true;
-                        }
-                        else if (buttons.button[3] && buttons.flag2[3])
-                        {
-                            buttons.flag2[3] = true;
-                        }
-                        Buttonj4();
-                    }
-
-                    if (hit.collider.gameObject == buttons.button[4])
-                    {
-                        if (buttons.button[4] && buttons.flag2[4] == false)
-                        {
-                            buttons.flag2[4] = true;
-                        }
-                        else if (buttons.button[4] && buttons.flag2[4])
-                        {
-                            buttons.flag2[4] = true;
-                        }
-                        Buttonj4();
-                    }*/
                     flagjudge();
-                }          
-                if(plight != null)
-                {
-                    if(hit.collider.gameObject == cbutton.charge)
-                    {
-                        Debug.Log("true");
-                        plight.ChargeLight();
-                    }
+                   
                 }
             }
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 5,false);
         }
-        if (buttons != null)
+
+        if(Input.GetMouseButtonUp(0))
         {
-            if (Input.GetMouseButtonUp(0))
+            for(int i = 0; i < buttons.flag2.Length; i++)
             {
-                for (int i = 0; i < buttons.flag2.Length; i++)
-                {
-                    if (buttons.flag2[i] == true)
-                    {
-                        mremove = true;
-                        continue;
-                    }
-                }
-                /*if (buttons.flag2[0] || buttons.flag2[1])
+                if (buttons.flag2[i] == true)
                 {
                     mremove = true;
-                    //buttons.flag2[0] = false ;
-                 }*/
+                    continue;
+                }
             }
-        }            
+            /*if (buttons.flag2[0] || buttons.flag2[1])
+            {
+                mremove = true;
+                //buttons.flag2[0] = false ;
+             }*/
+        }
         
         if (mremove)
         {
-            
-            times = times +Time.deltaTime;
-            //stimer = times% 10.1f;
-            //Debug.Log(times);
-            if(times > 10)
+            times = Time.time;
+            stimer = times % 10.1f;
+            //Debug.Log(stimer);
+            if(stimer > 10)
             {
-                times = 0f;
                 mremove = false;
                 for(int flag = 0; flag < buttons.flag2.Length; flag++)
                 {
@@ -217,6 +220,14 @@ public class MouseAction : MonoBehaviour
 
             }
         }
+        /*if (mpos_x >= mposmin_x && mpos_y >= mposmin_y && mpos_x <= mposmax_x && mpos_y <= mposmax_y)
+        {
+            //Debug.Log(Input.mousePosition);
+            if (players != null)
+            {
+                Debug.Log(hit.collider.transform.position);
+            }
+        }*/
         
     }
 }

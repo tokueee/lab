@@ -18,14 +18,15 @@ public class Player_Light : MonoBehaviour
     //timer
     public float delLtime = 60;
     public Light Light_main;
+    public Light Light_sub;//Renge=100～50 Spot Angle=100～75
+
+
     private float[] timer = new float[2];//0=main, 1=sub
     private float[] checktime = {0, 0};
     private float[] time_Elapsed = {0, 0};//経過時間(一度ライトを消したときのため)0=main, 1=sub
     private float Lv_Lm;//Light_main用
-
-    //変数を追加しただけだよ↓
-    public Light Light_sub;//Renge=100～50 Spot Angle=100～75
     private float[] Lv_Ls = new float[2];//0=Renge, 1=Spot Angle
+    private float scale_bar =1;
     //private float time_Elapsed2 = 0;//経過時間(一度ライトを消したときのため)sub
 
     //private float[] stime = new float[5];
@@ -63,7 +64,7 @@ public class Player_Light : MonoBehaviour
                         if (reset_light) 
                         {
                             checktime[1] = Time.time;
-                            reset_light = !reset_light;
+                            reset_light = false;
                         }
                     }
 
@@ -75,17 +76,18 @@ public class Player_Light : MonoBehaviour
                         Lv_Lm -= 0.5f;
                         time_Elapsed[0] = 0;
                         down_F = false;
-                        Lightbar.value = Lightbar.value - 0.15f;
+                        //Lightbar.value = Lightbar.value - 0.15f;
                         return;//updateの最初から
                     }
 
                     //sub
                     {
-                        Lv_Ls[0] = 50-((50/timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
+                        Lv_Ls[0] = 75-((75/timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
                         Lv_Ls[1] = 25-((25/timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
+                        scale_bar =1 - ((1 / timer[1]) * (time_Elapsed[1] + Time.time - checktime[1]));
                     }
                     
-                    Debug.Log(Lv_Ls[0]); Debug.Log(Lv_Ls[0]);
+
 
                 }
                 if (!isON)
@@ -106,8 +108,9 @@ public class Player_Light : MonoBehaviour
                 ChageLight();
             }
             Light_main.intensity = Lv_Lm;
-            Light_sub.range = Lv_Ls[0] + 50;
+            Light_sub.range = Lv_Ls[0] + 25;
             Light_sub.spotAngle = Lv_Ls[1] + 75;
+            Lightbar.value = scale_bar;
             down_F = isON;
         }
     }
@@ -132,6 +135,11 @@ public class Player_Light : MonoBehaviour
         Light.SetActive(isON);
     }
 
+    public void UpdateSystem()
+    {   
+        Lightbar.value = scale_bar;
+    }
+
     public bool Lightcheck()
     {
         return isON;
@@ -143,7 +151,9 @@ public class Player_Light : MonoBehaviour
         this.Lv_Ls[0] = 50;
         this.Lv_Ls[1] = 25;
         this.reset_light = true;
-        time_Elapsed[1] = 0;
+        this.time_Elapsed[1] = 0;
+        this.scale_bar = 1;
+        this.down_F = false;
     }
 
 }
