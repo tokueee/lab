@@ -10,17 +10,24 @@ public class Battelys : MonoBehaviour
 
 
     public GameObject[] Battely;
+    public float TurnTime = 0.25f;
     private GameObject Player;
     private Player_Light PL;
     private int battely_num;
     private int before_num;
+    private bool[] check;
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player");
         PL = Player.GetComponent<Player_Light>() ;
         Reset_battelys();
-
+        
+        check = new bool[Battely.Length];
+        for(int p=0; p<Battely.Length; p++)
+        {
+            check[p] = true;
+        }
 
         // 数列に適当な値を追加(数列の要素数分オブジェクトを追加しようとした痕跡)
         {
@@ -53,14 +60,20 @@ public class Battelys : MonoBehaviour
                 PL.ChargeLight();
                 //PL.UpdateSystem();
                 Battely[battely_num].SetActive(false);
+                check[battely_num] = false;
+                Debug.Log("get_battely");
             }
         }
-
-        for(int i = 0; i <= Battely.Length; i++) 
+        
+        for(int i = 0; i < Battely.Length; i++) 
         {
-            float turn = Battely[i].transform.localEulerAngles.y + 1;//batteryオブジェクトのRotation.Yを取得し1を追加
-            if (turn >= 360) { turn -= 360; }
-            Battely[i].transform.Rotate(0f, turn, 0f);
+            if (check[i])
+            {
+                float turn = Battely[i].transform.localEulerAngles.z + TurnTime;//batteryオブジェクトのRotation.Yを取得しturnTimeを追加
+                if (turn >= 360) { turn -= 360; }
+                Battely[i].transform.Rotate(0f, 0f, turn);
+            }
+            else if (!check[i]) { Debug.Log("after"+i); }
         }
         before_num = battely_num;
         battely_num = -1;
@@ -76,7 +89,7 @@ public class Battelys : MonoBehaviour
     {
         battely_num = -1;
         before_num = battely_num;
-        for (int i=0;i<=Battely.Length;i++)
+        for (int i=0;i<Battely.Length;i++)
         {
             Battely[i].SetActive(true);
         }
