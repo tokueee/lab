@@ -15,8 +15,8 @@ public class Enemy_Light : MonoBehaviour
     [SerializeField]
     private Transform Startpotision;
 
-    [SerializeField]
-    private float Speed;
+   // [SerializeField]
+   // private float Speed;
 
     private NavMeshAgent navMeshAgent;
 
