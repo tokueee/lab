@@ -15,17 +15,20 @@ public class MouseAction : MonoBehaviour
     private float mposmin_y = 320;*/
     ButtonJudge buttons;
     Battelys battelys;
+    Lightset lsets;
 
     private float times;
     private float stimer;
     private bool mremove = false;
     private bool flags;
+    //public bool oneclick = false;
 
     // Start is called before the first frame update
     void Start()
     {
         buttons = FindObjectOfType<ButtonJudge>();
         battelys = FindObjectOfType<Battelys>();
+        lsets = FindObjectOfType<Lightset>();
         
         //Debug.Log(buttons.button[1]);
         //Debug.Log(buttons.flag2);
@@ -84,8 +87,10 @@ public class MouseAction : MonoBehaviour
                     for(int h = 0; h < buttons.button.Length; h++)
                     {
                         //ライトのボタンを押しているのか検出するためのif分
-                        if (hit.collider.gameObject == buttons.button[h])
+                        if (hit.collider.gameObject == buttons.button[h] && !lsets.oneclick)
                         {
+                            lsets.oneclick = true;
+                            //Debug.Log(lsets.oneclick);
                             buttons.Getnum(h);   
                             /*if (buttons.button[h] && buttons.flag2[h] == false)
                             {
@@ -101,14 +106,23 @@ public class MouseAction : MonoBehaviour
                         }
                     }
 
-
-                    for (int j = 0; j < battelys.Battely.Length; j++)
+                    if(battelys != null)
+                    {
+                        for (int j = 0; j < battelys.Battely.Length; j++)
+                        {
+                            if (hit.collider.gameObject == battelys.Battely[j])
+                            {
+                                battelys.Get_num(j);
+                            }
+                        }
+                    }
+                    /*for (int j = 0; j < battelys.Battely.Length; j++)
                     {
                         if (hit.collider.gameObject == battelys.Battely[j])
                         {
                             battelys.Get_num(j);
                         }
-                    }
+                    }*/
                     Buttonflag();
 
                     //※
@@ -188,7 +202,7 @@ public class MouseAction : MonoBehaviour
                    
                 }
             }
-            Debug.DrawRay(ray.origin, ray.direction * 10, Color.red, 5,false);
+            Debug.DrawRay(ray.origin, ray.direction*5, Color.red, 5,false);
         }
 
         if(Input.GetMouseButtonUp(0))

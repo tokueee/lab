@@ -28,6 +28,7 @@ public class Lightset : MonoBehaviour
     [SerializeField] private GameObject playcs;
     [SerializeField] private MouseAction mouseaction;
     [SerializeField] private Player player;
+    public bool oneclick = false;
     //public GameObject noi;
     //public Light flight;
     [SerializeField]
@@ -153,6 +154,7 @@ public class Lightset : MonoBehaviour
             if (light[2].activeSelf == false)
             {
                 //light[2]が消えているなら実行
+                oneclick = false;
                 num = 0;
                 maxnum = 2;
                 light[0].SetActive(true);
@@ -169,6 +171,7 @@ public class Lightset : MonoBehaviour
             {
                 //Debug.Log("ON");
                 //light[18]が消えているなら実行
+                oneclick = false;
                 num = 16;
                 maxnum = 18;
                 nf = true;
@@ -186,6 +189,7 @@ public class Lightset : MonoBehaviour
             if (light[7].activeSelf == false)
             {
                 //light[7]が消えているなら実行
+                oneclick = false;
                 num = 5;
                 maxnum = 7;
                 light[5].SetActive(true);
@@ -200,6 +204,7 @@ public class Lightset : MonoBehaviour
             if (light[15].activeSelf == false)
             {
                 //light[15]が消えているなら実行
+                oneclick = false;
                 num = 12;
                 maxnum = 15;
                 light[12].SetActive(true);
@@ -215,6 +220,7 @@ public class Lightset : MonoBehaviour
             if (light[11].activeSelf == false)
             {
                 //light[11]が消えているなら実行
+                oneclick = false;
                 num = 8;
                 maxnum = 11;
                 light[8].SetActive(true);
