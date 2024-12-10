@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody rb;
+    private GameObject O_C;
     CameraControll CameraCS;
     Player_Light Player_Light;
     Vector3 get_see;
@@ -32,6 +33,10 @@ public class Player : MonoBehaviour
     private bool sta;
 
 
+    public bool pu = false;
+    public bool spu = false;
+
+
     //ÉâÉCÉgópÅ´
     //[SerializeField]
     //private GameObject Light;
@@ -47,7 +52,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //player_light = Light.GetComponent<Light>();
         //UpdateLight();
-        CameraCS = GetComponent<CameraControll>();
+        O_C = GameObject.Find("Main Camera");
+        CameraCS = O_C.GetComponent<CameraControll>();
 
         Player_Light = GetComponent<Player_Light>();
 
@@ -232,6 +238,13 @@ public class Player : MonoBehaviour
         }
         //WASD keyÇÃÇ«ÇÍÇ©Ç™âüÇ≥ÇÍÇΩÇ∆Ç´ÇÃîΩâû(à⁄ìÆ)
         {
+            /*if (keyCount >= 1)
+            {
+                pu = true;
+            }
+            else { pu = false; }*/
+
+
             if (key_W)
             {
                 //rb.AddForce(transform.forward * mspeed);
