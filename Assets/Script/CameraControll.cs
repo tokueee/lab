@@ -18,6 +18,7 @@ public class CameraControll: MonoBehaviour
 
     [SerializeField] private GameObject player;//‚±‚Á‚¿‚¾‚¯‚ÉPlayer‚ð“ü‚ê‚é
     [SerializeField] private Player playerc;
+    public Transform Player_Rot;
 
     private float sin;
 
@@ -54,18 +55,18 @@ public class CameraControll: MonoBehaviour
         Rot_Camera.x = Mathf.Clamp(Rot_Camera.x, -90, 90);
         Rot_Camera.y += Input.GetAxis("Mouse X") * RotateSpeed;
 
-        transform.rotation = Quaternion.Euler(0, Rot_Camera.y, 0);
+        Player_Rot.rotation = Quaternion.Euler(0, Rot_Camera.y, 0);
         camera.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
         Light.rotation = Quaternion.Euler(Rot_Camera.x, Rot_Camera.y, 0);
 
-        if (playerc.spu && playerc.pu)
+        if (playerc.key_Shift && playerc.keyCount >= 1)
         {
             time += Time.deltaTime;
             sin = Mathf.Sin(180 * time * dspeed * Mathf.Deg2Rad);
             campos.y += sin / dfreque;
             //Debug.Log("sin = " + sin);
         }
-        else if (playerc.pu)
+        else if (playerc.keyCount>=1)
         {
             time += Time.deltaTime;
             sin = Mathf.Sin(180 * time* speed * Mathf.Deg2Rad);
