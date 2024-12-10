@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ButtonJudge : MonoBehaviour
 {
+    Randam ran;
+
+    [SerializeField] private GameObject Prand;//Player‚ð“ü‚ê‚é
     public GameObject[] button;
     public bool[] flag2;
     public Light[] enemyLSpot;
@@ -14,10 +17,9 @@ public class ButtonJudge : MonoBehaviour
     [2] =Spot Light(9)
     [3] =Spot Light(12)R
      */
-    // Start is called before the first frame update
     void Start()
     {
-        
+        ran = Prand.GetComponent<Randam>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,7 @@ public class ButtonJudge : MonoBehaviour
     }
     public void Getnum(int h)
     {
+        Debug.Log(ran.spone);
         if (button[h] && flag2[h] == false)
         {
             flag2[h] = true;
@@ -36,7 +39,11 @@ public class ButtonJudge : MonoBehaviour
         {
             flag2[h] = true;
         }
-        enemyLSpot[h].color = Color.red;
-        enemyLSpotP[h].color = Color.red;
+        if (ran.spone)
+        {
+            enemyLSpot[h].color = Color.red;
+            enemyLSpotP[h].color = Color.red;
+            
+        }
     }
 }
