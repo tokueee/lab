@@ -154,7 +154,7 @@ public class Lightset : MonoBehaviour
             if (light[2].activeSelf == false)
             {
                 //light[2]が消えているなら実行
-                oneclick = false;
+                //oneclick = false;
                 num = 0;
                 maxnum = 2;
                 light[0].SetActive(true);
@@ -171,7 +171,7 @@ public class Lightset : MonoBehaviour
             {
                 //Debug.Log("ON");
                 //light[18]が消えているなら実行
-                oneclick = false;
+                //oneclick = false;
                 num = 16;
                 maxnum = 18;
                 nf = true;
@@ -189,7 +189,7 @@ public class Lightset : MonoBehaviour
             if (light[7].activeSelf == false)
             {
                 //light[7]が消えているなら実行
-                oneclick = false;
+                //oneclick = false;
                 num = 5;
                 maxnum = 7;
                 light[5].SetActive(true);
@@ -204,7 +204,7 @@ public class Lightset : MonoBehaviour
             if (light[15].activeSelf == false)
             {
                 //light[15]が消えているなら実行
-                oneclick = false;
+                //oneclick = false;
                 num = 12;
                 maxnum = 15;
                 light[12].SetActive(true);
@@ -220,7 +220,7 @@ public class Lightset : MonoBehaviour
             if (light[11].activeSelf == false)
             {
                 //light[11]が消えているなら実行
-                oneclick = false;
+                //oneclick = false;
                 num = 8;
                 maxnum = 11;
                 light[8].SetActive(true);
@@ -245,11 +245,18 @@ public class Lightset : MonoBehaviour
             nf = false;
             yield return new WaitForSeconds(keyDtime);
         }
+
         
         for (int k = num; k <= maxnum; k++)
         {
             light[k].SetActive(false);
             //Debug.Log(k);
+            //2,18,7,15,11
+            if (light[2].activeSelf == false){ oneclick = false;}
+            if (light[18].activeSelf == false){ oneclick = false;}
+            if (light[7].activeSelf == false){ oneclick = false;}
+            if (light[15].activeSelf == false){ oneclick = false;}
+            if (light[11].activeSelf == false){ oneclick = false;}
             yield return new WaitForSeconds(keyDtime);
         }
     }

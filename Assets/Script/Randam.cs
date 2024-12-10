@@ -6,7 +6,6 @@ public class Randam : MonoBehaviour
 {
     //Playerにアタッチ
     public bool SaveGet_rand = true;
-    [SerializeField] private GameObject mousea;//Buttonを入れる
 
     Player playerscript; //呼ぶスクリプトにあだなつける
     MouseAction mouseactionsc;
@@ -15,7 +14,7 @@ public class Randam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mouseactionsc = mousea.GetComponent<MouseAction>();
+        mouseactionsc =GetComponent<MouseAction>();
     }
 
     // Update is called once per frame
@@ -33,7 +32,6 @@ public class Randam : MonoBehaviour
                 spone = true;
                 Debug.Log("hit");
             }
-            
         }
         else
         {
@@ -46,7 +44,7 @@ public class Randam : MonoBehaviour
     {
         bool get_randam = false;//true=get
         //ランダムを一度止めるための変数
-        int chance = 2;
+        int chance = 5;
         if (SaveGet_rand) {
             int randnum5 = Random.Range(0, chance);//0からchanceまでのランダム変数を生成のつもり
                                                   //Debug_log表示

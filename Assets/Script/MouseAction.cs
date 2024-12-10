@@ -16,6 +16,7 @@ public class MouseAction : MonoBehaviour
     ButtonJudge buttons;
     Battelys battelys;
     Lightset lsets;
+    [SerializeField] private GameObject lightsets;
 
     private float times;
     private float stimer;
@@ -28,7 +29,7 @@ public class MouseAction : MonoBehaviour
     {
         buttons = FindObjectOfType<ButtonJudge>();
         battelys = FindObjectOfType<Battelys>();
-        lsets = FindObjectOfType<Lightset>();
+        lsets = lightsets.GetComponent<Lightset>();
         
         //Debug.Log(buttons.button[1]);
         //Debug.Log(buttons.flag2);
