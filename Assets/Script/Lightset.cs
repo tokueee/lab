@@ -40,6 +40,8 @@ public class Lightset : MonoBehaviour
     int lightoffCount = 1;
     int count =0;
 
+    Randam ran;
+    ButtonJudge button;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,9 @@ public class Lightset : MonoBehaviour
 
         mouseaction = buttons.GetComponent<MouseAction>();
         player = playcs.GetComponent<Player>();
+
+        ran = buttons.GetComponent<Randam>();
+        button = buttons.GetComponent<ButtonJudge>();
 
         //stime[0] = timer - 10.0f;//10ïbå„Ç…ñæÇÈÇ≥Çâ∫Ç∞ÇÈÇΩÇﬂÇÃèâä˙ê›íË
         slight[0] = 3.5f;
@@ -146,11 +151,37 @@ public class Lightset : MonoBehaviour
             }
         }
     }
+    void changelight(int n)
+    {
+        //Debug.Log(ran.spone);
+        if (ran.spone)
+        {
+            button.enemyLSpot[n].color = Color.red;
+            button.enemyLSpotP[n].color = Color.red;
+        }
+        else if(!ran.spone)
+        {
+            button.enemyLSpot[n].color = Color.white;
+            button.enemyLSpotP[n].color = Color.white;
+        }
+    }
 
     IEnumerator Keyboard_LightOn()
     {
         if (mouseaction.Buttonj1() == true)
         {
+            //Debug.Log(ran.spone);
+            changelight(0);
+            /*if (ran.spone)
+            {
+                button.enemyLSpot[0].color = Color.red;
+                button.enemyLSpotP[0].color = Color.red;
+            }
+            else
+            {
+                button.enemyLSpot[0].color = Color.white;
+                button.enemyLSpotP[0].color = Color.white;
+            }*/
             if (light[2].activeSelf == false)
             {
                 //light[2]Ç™è¡Ç¶ÇƒÇ¢ÇÈÇ»ÇÁé¿çs
@@ -235,6 +266,11 @@ public class Lightset : MonoBehaviour
         //Debug.Log(mylight[0]);
     }
 
+    void buttonchecks()
+    {
+        oneclick = false;
+        if (ran.spone) { ran.spone = false; }
+    }
 
     IEnumerator Keyboad_LightOff()
     {
@@ -246,18 +282,24 @@ public class Lightset : MonoBehaviour
             yield return new WaitForSeconds(keyDtime);
         }
 
+        //if (ran.spone){ ran.spone = false;}
         
         for (int k = num; k <= maxnum; k++)
         {
             light[k].SetActive(false);
             //Debug.Log(k);
             //2,18,7,15,11
-            if (light[2].activeSelf == false){ oneclick = false;}
-            if (light[18].activeSelf == false){ oneclick = false;}
-            if (light[7].activeSelf == false){ oneclick = false;}
-            if (light[15].activeSelf == false){ oneclick = false;}
-            if (light[11].activeSelf == false){ oneclick = false;}
+            if (light[k] == light[2] && light[2].activeSelf == false) { buttonchecks(); }
+            if (light[k] == light[18] && light[18].activeSelf == false) { buttonchecks(); }
+            if (light[k] == light[7] && light[7].activeSelf == false) { buttonchecks(); }
+            if (light[k] == light[15] && light[15].activeSelf == false) { buttonchecks(); }
+            if (light[k] == light[11] && light[11].activeSelf == false) { buttonchecks(); }
             yield return new WaitForSeconds(keyDtime);
+            /*if (light[k] == light[2] && light[2].activeSelf == false) { oneclick = false; }
+            if (light[k] == light[18] && light[18].activeSelf == false) { oneclick = false; }
+            if (light[k] == light[7] && light[7].activeSelf == false) { oneclick = false; }
+            if (light[k] == light[15] && light[15].activeSelf == false) { oneclick = false; }
+            if (light[k] == light[11] && light[11].activeSelf == false) { oneclick = false; }*/
         }
     }
     /* -IEnumerator Keyboad_LightOff2()
