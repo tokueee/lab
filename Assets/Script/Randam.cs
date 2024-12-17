@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Randam : MonoBehaviour
 {
-    //Playerにアタッチ
+    //Buttonsにアタッチ
     public bool SaveGet_rand = true;
 
-    Player playerscript; //呼ぶスクリプトにあだなつける
+    //Player playerscript; //呼ぶスクリプトにあだなつける
     MouseAction mouseactionsc;
 
     public bool spone;
@@ -21,15 +21,16 @@ public class Randam : MonoBehaviour
 
     private void Update()
     {
-        GameObject obj = GameObject.Find("Player"); //Playerっていうオブジェクトを探す
-        playerscript = obj.GetComponent<Player>();
+        //GameObject obj = GameObject.Find("Player"); //Playerっていうオブジェクトを探す
+        //playerscript = obj.GetComponent<Player>();
         //付いているスクリプトを取得
-        if (mouseactionsc.Buttonj1())
+        if (mouseactionsc.checks)
         {
             if (Get_Randam(ref SaveGet_rand))
             {
                 //Debug.Logランダム生成を呼び出せたことを表示する
                 spone = true;
+                //Debug.Log(SaveGet_rand);
                 Debug.Log("hit");
             }
         }
@@ -39,6 +40,15 @@ public class Randam : MonoBehaviour
         }
     }
 
+    /*bool butoonjcheck(int k)
+    {
+        bool check = false;
+        if (buttonJudgesc.button[k])
+        {
+            check = mouseactionsc.Buttonj1();
+        }
+        return check;
+    }*/
 
     private bool Get_Randam(ref bool SaveGet_rand)//1/5の確率でtrueを返す関数
     {
