@@ -12,12 +12,13 @@ public class Lightset : MonoBehaviour
 
     private float timer = 60.0f;
     //private float times;
-    private float timer2;
-    private float[] stime = new float[5];
-    private float[] slight = new float[5];
+    //private float timer2;
+    //private float[] stime = new float[5];
+    //private float[] slight = new float[5];
     private int num;
     private int maxnum;
     private bool nf = false;
+    private bool[] on = new bool[5];
     //private int p = 7;
     //private float[] ftime;
 
@@ -53,15 +54,14 @@ public class Lightset : MonoBehaviour
 
         ran = buttons.GetComponent<Randam>();
         button = buttons.GetComponent<ButtonJudge>();
-
         //stime[0] = timer - 10.0f;//10秒後に明るさを下げるための初期設定
-        slight[0] = 3.5f;
+        /*slight[0] = 3.5f;
         for(int i = 0; i < stime.Length; i++)
         {
             timer2 = timer - (10 * (i+1));
             stime[i] = timer2;
             //Debug.Log("i =" +stime[i]);
-        }
+        }*/
         /*- foreach(GameObject game in light)
         {
             Debug.Log(game.name);
@@ -146,14 +146,18 @@ public class Lightset : MonoBehaviour
                     light[19].SetActive(false);
                     yield return new WaitForSeconds(dtime);
                 }
-                light[j].SetActive(false);
+                if (light[15].activeSelf == false)
+                {
+                    yield return new WaitForSeconds(dtime);
+                }
+                    light[j].SetActive(false);
                 yield return new WaitForSeconds(dtime);
             }
         }
     }
     void changelight(int n)
     {
-        //Debug.Log(ran.spone);
+        //Debug.Log(n);
         if (ran.spone)
         {
             button.enemyLSpot[n].color = Color.red;
@@ -188,11 +192,16 @@ public class Lightset : MonoBehaviour
                 //oneclick = false;
                 num = 0;
                 maxnum = 2;
+                on[0] = true;
                 light[0].SetActive(true);
                 light[1].SetActive(true);
                 light[2].SetActive(true);
                 yield return new WaitForSeconds(keyDtime);
                 StartCoroutine(Keyboad_LightOff());
+            }
+            else if (light[2].activeSelf == true)
+            {
+                oneclick = false;
             }
             //Debug.Log(playerscript.flag);
         }
@@ -200,44 +209,61 @@ public class Lightset : MonoBehaviour
         {
             if (light[18].activeSelf == false)
             {
+                changelight(1);
                 //Debug.Log("ON");
                 //light[18]が消えているなら実行
                 //oneclick = false;
                 num = 16;
                 maxnum = 18;
                 nf = true;
+                on[1] = true;
                 light[4].SetActive(true);
                 light[16].SetActive(true);
                 light[17].SetActive(true);
                 light[18].SetActive(true);
+                yield return new WaitForSeconds(keyDtime);
+                StartCoroutine(Keyboad_LightOff());
             }
-            
-            yield return new WaitForSeconds(keyDtime);
-            StartCoroutine(Keyboad_LightOff());
+            else if (light[18].activeSelf == true)
+            {
+                oneclick = false;
+            }
+
+            /*yield return new WaitForSeconds(keyDtime);
+            StartCoroutine(Keyboad_LightOff());*/
         }
         if (mouseaction.Buttonj3() == true)
         {
             if (light[7].activeSelf == false)
             {
+                changelight(2);
                 //light[7]が消えているなら実行
                 //oneclick = false;
                 num = 5;
                 maxnum = 7;
+                on[2] = true;
                 light[5].SetActive(true);
                 light[6].SetActive(true);
                 light[7].SetActive(true);
                 yield return new WaitForSeconds(keyDtime);
                 StartCoroutine(Keyboad_LightOff());
             }
+            else if (light[7].activeSelf == true)
+            {
+                oneclick = false;
+            }
+
         }
         if (mouseaction.Buttonj4() == true)
         {
             if (light[15].activeSelf == false)
             {
+                changelight(3);
                 //light[15]が消えているなら実行
                 //oneclick = false;
                 num = 12;
                 maxnum = 15;
+                on[3] = true;
                 light[12].SetActive(true);
                 light[13].SetActive(true);
                 light[14].SetActive(true);
@@ -245,21 +271,31 @@ public class Lightset : MonoBehaviour
                 yield return new WaitForSeconds(keyDtime);
                 StartCoroutine(Keyboad_LightOff());
             }
+            else if (light[15].activeSelf == true)
+            {
+                oneclick = false;
+            }
         }
         if (mouseaction.Buttonj5() == true)
         {
             if (light[11].activeSelf == false)
             {
+                changelight(4);
                 //light[11]が消えているなら実行
                 //oneclick = false;
                 num = 8;
                 maxnum = 11;
+                on[4] = true;
                 light[8].SetActive(true);
                 light[9].SetActive(true);
                 light[10].SetActive(true);
                 light[11].SetActive(true);
                 yield return new WaitForSeconds(keyDtime);
                 StartCoroutine(Keyboad_LightOff());
+            }
+            else if (light[11].activeSelf == true)
+            {
+                oneclick = false;
             }
         }
 
@@ -268,7 +304,11 @@ public class Lightset : MonoBehaviour
 
     void buttonchecks()
     {
-        oneclick = false;
+        for(int i = 0; i < on.Length; i++)
+        {
+            on[i] = false;
+        }
+        //Debug.Log(on);
         if (ran.spone) { ran.spone = false; }
     }
 
@@ -281,13 +321,21 @@ public class Lightset : MonoBehaviour
             nf = false;
             yield return new WaitForSeconds(keyDtime);
         }
-
-        //if (ran.spone){ ran.spone = false;}
         
+        //if (ran.spone){ ran.spone = false;}
+        //ボタン色変え(保留)
+        for(int j=0; j < on.Length; j++) {
+            if (on[j] == true)
+            {
+                button.buttonColor(j);
+            }
+        }
+
         for (int k = num; k <= maxnum; k++)
         {
             light[k].SetActive(false);
             //Debug.Log(k);
+            
             //2,18,7,15,11
             if (light[k] == light[2] && light[2].activeSelf == false) { buttonchecks(); }
             if (light[k] == light[18] && light[18].activeSelf == false) { buttonchecks(); }
@@ -295,6 +343,7 @@ public class Lightset : MonoBehaviour
             if (light[k] == light[15] && light[15].activeSelf == false) { buttonchecks(); }
             if (light[k] == light[11] && light[11].activeSelf == false) { buttonchecks(); }
             yield return new WaitForSeconds(keyDtime);
+
             /*if (light[k] == light[2] && light[2].activeSelf == false) { oneclick = false; }
             if (light[k] == light[18] && light[18].activeSelf == false) { oneclick = false; }
             if (light[k] == light[7] && light[7].activeSelf == false) { oneclick = false; }

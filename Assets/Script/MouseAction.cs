@@ -22,6 +22,8 @@ public class MouseAction : MonoBehaviour
     private float stimer;
     private bool mremove = false;
     private bool flags;
+
+    public bool checks;
     //public bool oneclick = false;
 
     // Start is called before the first frame update
@@ -30,7 +32,7 @@ public class MouseAction : MonoBehaviour
         buttons = FindObjectOfType<ButtonJudge>();
         battelys = FindObjectOfType<Battelys>();
         lsets = lightsets.GetComponent<Lightset>();
-        
+
         //Debug.Log(buttons.button[1]);
         //Debug.Log(buttons.flag2);
     }
@@ -78,6 +80,7 @@ public class MouseAction : MonoBehaviour
         //Debug.Log(mpos_y);
         if (Input.GetMouseButtonDown(0))
         {
+            //マウスボタンが押されたら実行
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit,5.0f))
@@ -92,7 +95,9 @@ public class MouseAction : MonoBehaviour
                         {
                             lsets.oneclick = true;
                             //Debug.Log(lsets.oneclick);
-                            buttons.Getnum(h);   
+                            buttons.Getnum(h);
+                            checks = buttons.butoonjcheck(h);//Randamで使うためにchcksに結果を入れる
+                            //Debug.Log(checks);
                             /*if (buttons.button[h] && buttons.flag2[h] == false)
                             {
                                 buttons.flag2[h] = true;
@@ -208,6 +213,7 @@ public class MouseAction : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0))
         {
+            //マウスボタンから離れた時に実行
             for(int i = 0; i < buttons.flag2.Length; i++)
             {
                 if (buttons.flag2[i] == true)
@@ -231,6 +237,8 @@ public class MouseAction : MonoBehaviour
             if(stimer > 10)
             {
                 mremove = false;
+                checks = false;
+                //falseにして次の実行に備える
                 for(int flag = 0; flag < buttons.flag2.Length; flag++)
                 {
                     buttons.flag2[flag] = false;
